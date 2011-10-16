@@ -1,0 +1,474 @@
+format 76
+"Analyse" // Analyse
+  revision 3
+  modified_by 3 "Fabien_2"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default class_drawing_mode default shadow default show_stereotype_properties default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default show_stereotype_properties default
+  
+  classview 128003 "MDD"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default class_drawing_mode default drawing_language default package_name_in_tab default show_context default show_msg_context default draw_all_relations default shadow default show_stereotype_properties default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default show_stereotype_properties default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default show_stereotype_properties default show_class_context_mode default show_msg_context_mode default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default show_stereotype_properties default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default show_stereotype_properties default
+    classdiagram 128003 "MDD"
+      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A4
+    end
+
+    class 128003 "Matrice"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 128003 "numbers"
+	public explicit_type "int16"
+	stereotype "vector"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 128003 // <dependency>
+	relation 128003 -_->
+	  a default
+	    classrelation_ref 128003 // <dependency>
+	  b parent class_ref 128131 // Input
+      end
+
+      attribute 134787 "width"
+	private explicit_type "int32"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 134915 "length"
+	private explicit_type "int32"
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 128387 "SearchMaxSubarray"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      classrelation 134787 // (<<include>>)
+	relation_ref 134659 // <<include>>
+      end
+    end
+
+    class 128131 "Input"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 128131 "filenames"
+	private explicit_type "string"
+	stereotype "vector"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+
+    class 128259 "Output"
+      visibility package 
+      cpp_decl ""
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 128259 "coord_maximum_subarrays"
+	private explicit_type "string"
+	stereotype "vector"
+	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      classrelation 128131 // <dependency>
+	relation 128131 -_->
+	  a default
+	    classrelation_ref 128131 // <dependency>
+	  b parent class_ref 128003 // Matrice
+      end
+    end
+
+    activity 134531 "DFD Creer Matrice depuis Fichier"
+      activitydiagram 134531 "DFD Creer Matrice depuis Fichier"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A3
+      end
+
+      activitynode 134531 initial_node ""
+	flow 139011 "<flow>"
+	  on activityaction_ref 135811 // activity action Ouvrir le fichier $Filename dans $FileHandle
+	end
+      end
+
+      activitynode 134659 activity_final ""
+      end
+
+      activityaction 134915 "Creer la matrice $Matrice"
+	opaque_action
+	flow 138371 "<flow>"
+	  on activityobject_ref 134659 // activity object $Matrice
+	end
+      end
+
+      activitynode 134915 merge ""
+	flow 135427 "<flow>"
+	  on activityaction_ref 135171 // activity action Lire le nombre dans $CurrentValue
+	end
+      end
+
+      activityaction 135171 "Lire le nombre dans $CurrentValue"
+	opaque_action
+	flow 135555 "<flow>"
+	  on activityaction_ref 135299 // activity action Copier $CurrentValue dans $PtrElement
+	end
+      end
+
+      activityaction 135299 "Copier $CurrentValue dans $PtrElement"
+	opaque_action
+	flow 136323 "<flow>"
+	  on activitynode_ref 135043 // decision
+	end
+      end
+
+      activityaction 135427 "Incrementer $PtrElement de 1"
+	opaque_action
+	flow 135811 "<flow>"
+	  on activityaction_ref 135555 // activity action Deplacer $FileHandle de 1
+	end
+
+	flow 136579 "<flow>"
+	  on activityaction_ref 135555 // activity action Deplacer $FileHandle de 1
+	end
+      end
+
+      activityaction 135555 "Deplacer $FileHandle de 1"
+	opaque_action
+	flow 136195 "<flow>"
+	  on activitynode_ref 134915 // merge
+	end
+      end
+
+      activitynode 135043 decision ""
+	flow 136451 "<flow> [Not EOF]"
+	  on activityaction_ref 135427 // activity action Incrementer $PtrElement de 1
+	end
+
+	flow 137731 "<flow>"
+	  on activityaction_ref 136067 // activity action Fermer $FileHandle
+	end
+      end
+
+      activityaction 135683 "Dupliquer le pointeur $Matrice -> numbers vers $PtrElement"
+	opaque_action
+	pin 135043 "$PtrElement" explicit_type ""
+	  unordered 
+	  out
+	  flow 138883 "<flow>"
+	    on activitynode_ref 134915 // merge
+	  end
+	end
+      end
+
+      activityaction 135811 "Ouvrir le fichier $Filename dans $FileHandle"
+	opaque_action
+	pin 134787 "$FileHandle" explicit_type ""
+	  unordered 
+	  out
+	  flow 138755 "<flow>"
+	    on pin_ref 134659 // $FileHandle
+	  end
+	end
+      end
+
+      activityaction 135939 "Compter nombre de colonnes ($CountCol) et de lignes ($CountRow) dans $FileHandle"
+	opaque_action
+	comment "Parcours le fichier caractere par caractere. 
+
+Compte le nombre d'espace blanc et tabulation sur la premiere ligne pour obtenir $NbLigne
+Compte le nombre de \\n dans le fichier pour obtenir $NbColonne
+
+Pas de controle d'intégrité"
+	flow 137475 "<flow>"
+	  on activityaction_ref 134915 // activity action Creer la matrice $Matrice
+	end
+
+	pin 134659 "$FileHandle" explicit_type ""
+	  unordered 
+	  in
+	end
+      end
+
+      activityobject 134659 "$Matrice"
+	 type class_ref 128003 // Matrice
+	unordered 
+	flow 138499 "<flow>"
+	  on activityaction_ref 135683 // activity action Dupliquer le pointeur $Matrice -> numbers vers $PtrElement
+	end
+      end
+
+      activityaction 136067 "Fermer $FileHandle"
+	opaque_action
+	flow 137859 "<flow>"
+	  on activitynode_ref 134659 // activity_final
+	end
+      end
+
+      parameter 134659 "$Filename" explicit_type ""
+	unordered 
+	in
+      end
+    end
+
+    activity 134659 "DFD"
+      activitydiagram 134659 "DFD"
+	package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations no shadow default
+	show_infonote default drawing_language default show_stereotype_properties default
+	size A3
+      end
+
+      activitynode 135171 initial_node ""
+	flow 141059 "<flow>"
+	  on activitynode_ref 135683 // decision
+	end
+      end
+
+      activityaction 136195 "Obtenir le premier nom de fichier dans $Filename depuis $Args"
+	opaque_action
+	pin 134531 "$FileName" explicit_type ""
+	  unordered 
+	  out
+	  flow 138627 "<flow>"
+	    on activitynode_ref 135299 // merge
+	  end
+	end
+      end
+
+      activitynode 135299 merge ""
+	flow 139139 "<flow>"
+	  on pin_ref 135171 // $Filename
+	end
+      end
+
+      activityaction 136323 "Creer Matrice"
+	call_behavior_action
+	synchronous activity_ref 134531 // DFD Creer Matrice depuis Fichier
+	pin 135171 "$Filename" explicit_type ""
+	  unordered is_control
+	  in
+	end
+
+	flow 139267 "<flow>"
+	  on activityobject_ref 134787 // activity object Matrice
+	end
+      end
+
+      activityobject 134787 "Matrice"
+	 type class_ref 128003 // Matrice
+	unordered 
+	flow 148227 "<flow>"
+	  on activityaction_ref 136451 // activity action Chercher les bornes de la sous matrice maximum
+	end
+      end
+
+      activityaction 136451 "Chercher les bornes de la sous matrice maximum"
+	opaque_action
+	pin 142083 "borne_max_subarray" explicit_type ""
+	  unordered 
+	  out
+	  flow 147971 "<flow>"
+	    on pin_ref 142211 // borne_max_subarray
+	  end
+	end
+      end
+
+      activityaction 136579 "Obtenir le nom de fichier suivant depuis $Args"
+	opaque_action
+	pin 135299 "$FileName" explicit_type ""
+	  unordered 
+	  out
+	  flow 139779 "<flow>"
+	    on activitynode_ref 135299 // merge
+	  end
+	end
+      end
+
+      activitynode 135427 decision ""
+	flow 139651 "<flow>[not DernierFichier]"
+	  on activityaction_ref 136579 // activity action Obtenir le nom de fichier suivant depuis $Args
+	end
+
+	flow 139907 "<flow> [DernierFichier]"
+	  on activitynode_ref 135555 // activity_final
+	end
+      end
+
+      activitynode 135555 activity_final ""
+      end
+
+      activityaction 136707 "Detruire matrice"
+	opaque_action
+	flow 140163 "<flow>"
+	  on activitynode_ref 135427 // decision
+	end
+      end
+
+      activityaction 136835 "Obtenir le nombre de processeurs depuis $Args"
+	opaque_action
+	pin 135427 "$CountProcessor" explicit_type ""
+	  unordered 
+	  out
+	  flow 140419 "<flow>"
+	    on pin_ref 135555 // CountProcessor
+	  end
+	end
+      end
+
+      activityaction 136963 "Configurer la librairie de parallélisation"
+	opaque_action
+	pin 135555 "CountProcessor" explicit_type ""
+	  unordered 
+	  in
+	end
+
+	flow 140803 "<flow>"
+	  on activityobject_ref 134915 // activity object Params
+	end
+      end
+
+      activityobject 134915 "Params"
+	 type class_ref 134787 // Params
+	unordered 
+	flow 140931 "<flow>"
+	  on activityaction_ref 136195 // activity action Obtenir le premier nom de fichier dans $Filename depuis $Args
+	end
+      end
+
+      activitynode 135683 decision ""
+	flow 141187 "<flow>[$CountArgs >= 2]"
+	  on activityaction_ref 136835 // activity action Obtenir le nombre de processeurs depuis $Args
+	end
+
+	flow 141315 "<flow>[$CountArgs < 2]"
+	  on activityaction_ref 137091 // activity action Afficher Aide
+	end
+      end
+
+      activitynode 135811 activity_final ""
+      end
+
+      activityaction 137091 "Afficher Aide"
+	opaque_action
+	flow 141443 "<flow>"
+	  on activitynode_ref 135811 // activity_final
+	end
+      end
+
+      activityaction 143619 "Afficher les bornes de sous matrice"
+	opaque_action
+	pin 142211 "borne_max_subarray" explicit_type ""
+	  unordered 
+	  in
+	end
+
+	flow 148099 "<flow>"
+	  on activityaction_ref 136707 // activity action Detruire matrice
+	end
+      end
+    end
+
+    class 134787 "Params"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      attribute 135043 "count_processor"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+    end
+  end
+end

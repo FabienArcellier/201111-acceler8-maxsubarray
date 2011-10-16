@@ -1,0 +1,12 @@
+window_sizes 1366 716 320 960 512 82
+diagrams
+  active  classdiagram_ref 128003 // MDD
+    1040 558 100 4 0 0
+end
+show_stereotypes
+open
+  classview_ref 128003 // MDD
+  
+  package_ref 128131 // Design
+end
+end

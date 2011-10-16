@@ -1,0 +1,170 @@
+format 76
+
+activitynodecanvas 128003 activitynode_ref 134531 // initial_node
+  xyz 189 109 2000
+end
+activitynodecanvas 128131 activitynode_ref 134659 // activity_final
+  xyz 198 1189 2000
+end
+activityactioncanvas 129539 activityaction_ref 134915 // activity action Creer la matrice $Matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 115 427 2000 177 63
+end
+activitynodecanvas 130051 activitynode_ref 134915 // merge
+  xyz 195 718 2000
+end
+activityactioncanvas 130307 activityaction_ref 135171 // activity action Lire le nombre dans $CurrentValue
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 159 775 2005 101 61
+end
+activityactioncanvas 130435 activityaction_ref 135299 // activity action Copier $CurrentValue dans $PtrElement
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 161 859 2000 101 73
+end
+activityactioncanvas 130819 activityaction_ref 135427 // activity action Incrementer $PtrElement de 1
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 324 863 2000 101 61
+end
+activityactioncanvas 131075 activityaction_ref 135555 // activity action Deplacer $FileHandle de 1
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 323 776 2000 101 61
+end
+activitynodecanvas 131331 activitynode_ref 135043 // decision
+  xyz 198 978 2005
+end
+activityactioncanvas 132995 activityaction_ref 135683 // activity action Dupliquer le pointeur $Matrice -> numbers vers $PtrElement
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 147 604 2005 121 69
+  pins
+    pincanvas 137731 pin_ref 135043 // $PtrElement
+      xyzwh 200 672 2007 11 11 label_xy 126 674
+    end
+  end
+end
+activityactioncanvas 133507 activityaction_ref 135811 // activity action Ouvrir le fichier $Filename dans $FileHandle
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 151 176 2000 101 61
+  pins
+    pincanvas 137347 pin_ref 134787 // $FileHandle
+      xyzwh 189 236 2002 11 11 label_xy 128 241
+    end
+  end
+end
+activityactioncanvas 134275 activityaction_ref 135939 // activity action Compter nombre de colonnes ($CountCol) et de lignes ($CountRow) dans $FileHandle
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 141 288 2000 121 89
+  pins
+    pincanvas 137219 pin_ref 134659 // $FileHandle
+      xyzwh 190 278 2002 11 11 label_xy 130 268
+    end
+  end
+end
+note 134659 "Fonction
+Pre-cond : assert (ftell($FileHandle) == 0)
+Post-cond : assert (ftell($FileHandle) == 0)"
+  xyzwh 348 283 2000 239 87
+activityobjectcanvas 135171 activityobject_ref 134659 // activity object $Matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  xyzwh 177 528 2000 61 45
+end
+note 135427 "[return $Matrice]"
+  xyzwh 270 1187 2000 151 35
+note 135683 "[input $Filename]"
+  xyzwh 266.5 103.5 2000 151 35
+activityactioncanvas 136195 activityaction_ref 136067 // activity action Fermer $FileHandle
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 161 1061 2000 100 60
+end
+note 136579 "Objet de classe : Matrice
+Constructeur avec $CountCol et $CountRow"
+  xyzwh 363 496 2000 249 45
+flowcanvas 130563 flow_ref 135427 // <flow>
+  
+  from ref 130051 z 2006 to ref 130307
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130691 flow_ref 135555 // <flow>
+  
+  from ref 130307 z 2006 to ref 130435
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132099 flow_ref 136195 // <flow>
+  
+  from ref 131075 z 2001 to point 371 733
+  line 132227 z 2001 to ref 130051
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132355 flow_ref 136323 // <flow>
+  
+  from ref 130435 z 2006 to ref 131331
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132483 flow_ref 136451 // <flow> [Not EOF]
+  
+  from ref 131331 z 2006 label "<flow> [Not EOF]" xyz 258 1005 3000 to point 372 994
+  line 132739 z 2006 to ref 130819
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132611 flow_ref 136579 // <flow>
+  
+  from ref 130819 z 2001 to ref 131075
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 134531 flow_ref 137475 // <flow>
+  
+  from ref 134275 z 2001 to ref 129539
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136323 flow_ref 137731 // <flow>
+  
+  from ref 131331 z 2006 to ref 136195
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136451 flow_ref 137859 // <flow>
+  
+  from ref 136195 z 2001 to ref 128131
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136963 flow_ref 138371 // <flow>
+  
+  from ref 129539 z 2001 to ref 135171
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137091 flow_ref 138499 // <flow>
+  
+  from ref 135171 z 2006 to ref 132995
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137475 flow_ref 138755 // <flow>
+  
+  from ref 137347 z 2003 to ref 137219
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137859 flow_ref 138883 // <flow>
+  
+  from ref 137731 z 2008 to ref 130051
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137987 flow_ref 139011 // <flow>
+  
+  from ref 128003 z 2001 to ref 133507
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+line 134787 -_-_
+  from ref 134275 z 2001 to ref 134659
+line 135555 -_-_
+  from ref 128131 z 2001 to ref 135427
+line 135811 -_-_
+  from ref 128003 z 2001 to ref 135683
+line 136835 -_-_
+  from ref 129539 z 2001 to ref 136579
+end

@@ -1,0 +1,200 @@
+format 76
+
+activitynodecanvas 128131 activitynode_ref 135171 // initial_node
+  xyz 146 49 2000
+end
+activityactioncanvas 128515 activityaction_ref 136195 // activity action Obtenir le premier nom de fichier dans $Filename depuis $Args
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 93 518 2000 145 62
+  pins
+    pincanvas 129283 pin_ref 134531 // $FileName
+      xyzwh 158 579 2002 11 11 label_xy 86 585
+    end
+  end
+end
+activitynodecanvas 128771 activitynode_ref 135299 // merge
+  xyz 151 620 2000
+end
+activityactioncanvas 130051 activityaction_ref 136323 // activity action Creer Matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 119 702 2007 100 60
+  pins
+    pincanvas 130179 pin_ref 135171 // $Filename
+      xyzwh 159 692 2008 11 11 label_xy 106 683
+    end
+  end
+end
+activityobjectcanvas 130435 activityobject_ref 134787 // activity object Matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  xyzwh 142 797 2000 55 45
+end
+activityactioncanvas 130691 activityaction_ref 136451 // activity action Chercher les bornes de la sous matrice maximum
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 91 870 2000 159 71
+  pins
+    pincanvas 136835 pin_ref 142083 // borne_max_subarray
+      xyzwh 167 940 2002 11 11 label_xy 44 941
+    end
+  end
+end
+activityactioncanvas 130947 activityaction_ref 136579 // activity action Obtenir le nom de fichier suivant depuis $Args
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 368 718 2000 108 70
+  pins
+    pincanvas 131075 pin_ref 135299 // $FileName
+      xyzwh 409 708 2002 11 11 label_xy 355 699
+    end
+  end
+end
+activitynodecanvas 131203 activitynode_ref 135427 // decision
+  xyz 159 1223 2000
+end
+activitynodecanvas 131971 activitynode_ref 135555 // activity_final
+  xyz 159 1328 2000
+end
+activityactioncanvas 132227 activityaction_ref 136707 // activity action Detruire matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 123 1115 2006 100 60
+end
+activityactioncanvas 132739 activityaction_ref 136835 // activity action Obtenir le nombre de processeurs depuis $Args
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 105 209 2005 116 70
+  pins
+    pincanvas 133251 pin_ref 135427 // $CountProcessor
+      xyzwh 151 278 2007 11 11 label_xy 40 284
+    end
+  end
+end
+activityactioncanvas 133123 activityaction_ref 136963 // activity action Configurer la librairie de parallélisation
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 106 333 2000 100 60
+  pins
+    pincanvas 133379 pin_ref 135555 // CountProcessor
+      xyzwh 156 323 2002 11 11 label_xy 73 314
+    end
+  end
+end
+note 134275 "Cette activité est totalement séquentielle"
+  xyzwh 265 32 2000 183 59
+activityobjectcanvas 134787 activityobject_ref 134915 // activity object Params
+  show_infonote default drawing_language default show_stereotype_properties default
+  xyzwh 133 432 2000 55 45
+end
+activitynodecanvas 135683 activitynode_ref 135683 // decision
+  xyz 146 114 2000
+end
+activitynodecanvas 135811 activitynode_ref 135811 // activity_final
+  xyz 376 330 2000
+end
+activityactioncanvas 135939 activityaction_ref 137091 // activity action Afficher Aide
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 339 217 2000 100 60
+end
+activityactioncanvas 136707 activityaction_ref 143619 // activity action Afficher les bornes de sous matrice
+  show_infonote default drawing_language default show_stereotype_properties default
+  show_opaque_action_definition default
+  xyzwh 121 998 2011 100 60
+  pins
+    pincanvas 136963 pin_ref 142211 // borne_max_subarray
+      xyzwh 169 988 2013 11 11 label_xy 60 979
+    end
+  end
+end
+flowcanvas 129667 flow_ref 138627 // <flow>
+  
+  from ref 129283 z 2003 to ref 128771
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130307 flow_ref 139139 // <flow>
+  
+  from ref 128771 z 2009 to ref 130179
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 130563 flow_ref 139267 // <flow>
+  
+  from ref 130051 z 2008 to ref 130435
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131459 flow_ref 139651 // <flow>[not DernierFichier]
+  
+  from ref 131203 z 2001 label "<flow>[not DernierFichier]" xyz 239 1251.5 2001 to point 418 1238
+  line 131587 z 2001 to ref 130947
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 131715 flow_ref 139779 // <flow>
+  
+  from ref 131075 z 2003 to point 411 635
+  line 131843 z 2003 to ref 128771
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132099 flow_ref 139907 // <flow> [DernierFichier]
+  
+  from ref 131203 z 2001 label "<flow> [DernierFichier]" xyz 173 1285 2001 to ref 131971
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 132483 flow_ref 140163 // <flow>
+  
+  from ref 132227 z 2007 to ref 131203
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 133507 flow_ref 140419 // <flow>
+  
+  from ref 133251 z 2008 to ref 133379
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 135299 flow_ref 140803 // <flow>
+  
+  from ref 133123 z 2001 to ref 134787
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 135427 flow_ref 140931 // <flow>
+  
+  from ref 134787 z 2001 to ref 128515
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136067 flow_ref 141059 // <flow>
+  
+  from ref 128131 z 2001 to ref 135683
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136195 flow_ref 141187 // <flow>[$CountArgs >= 2]
+  
+  from ref 135683 z 2006 label "<flow>[$CountArgs >= 2]" xyz 169 173 2006 to ref 132739
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136323 flow_ref 141315 // <flow>[$CountArgs < 2]
+  decenter_begin 486
+  
+  from ref 135683 z 2001 label "<flow>[$CountArgs < 2]" xyz 220 113 2001 to point 385 131
+  line 136451 z 2001 to ref 135939
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 136579 flow_ref 141443 // <flow>
+  
+  from ref 135939 z 2001 to ref 135811
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137091 flow_ref 147971 // <flow>
+  
+  from ref 136835 z 2014 to ref 136963
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137219 flow_ref 148099 // <flow>
+  
+  from ref 136707 z 2012 to ref 132227
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+flowcanvas 137475 flow_ref 148227 // <flow>
+  
+  from ref 130435 z 2001 to ref 130691
+  show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
+end
+end
