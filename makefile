@@ -26,57 +26,70 @@ ifeq ($(TARGET),MTL)
     PREFIX=/opt/gcc/${GCC_VERSION}/bin
     CC=$(PREFIX)/gcc
     CFLAG=-Wall -lm -fopenmp -DNDEBUG=1 -O3 ${INCLUDE_DIRS}
-    LDFLAG=-Wall -lm -fopenmp ${INCLUDE_DIRS}
+    LDFLAG=-Wall -lstdc++ -lm -fopenmp ${INCLUDE_DIRS}
   else
     CC=icc
     CFLAG=-Werror-all -O3 -DNDEBUG=1 -openmp -axSSE2 ${INCLUDE_DIRS}
-    LDFLAG=-Werror-all -openmp -axSSE2 ${INCLUDE_DIRS}
+    LDFLAG=-Werror-all -lstdc++ -openmp -axSSE2 ${INCLUDE_DIRS}
   endif
 endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O3 -DNDEBUG=1 -fopenmp ${INCLUDE_DIRS}
-  LDFLAG=-Wall -lm -fopenmp ${INCLUDE_DIRS}
+  CFLAG=-Wall -lm -O3 -fopenmp ${INCLUDE_DIRS}
+  LDFLAG=-Wall -lm -fopenmp -lstdc++ ${INCLUDE_DIRS}
 endif
 
-#################################
+#*********************************
 #
 #	Target
 #
-#################################
+#*********************************
 
 run: ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-tests: main_tests
+tests: ${PATH_BIN}/problem_data_tests ${PATH_BIN}/main_tests copy_scenarios
 
-#################################
+#*********************************
 #
 #	Binaire
 #
-#################################
+#*********************************
 
-${PATH_BIN}/main_tests: ${PATH_OBJ}/main.obj ${PATH_OBJ}/main_tests.obj
+${PATH_BIN}/main_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/main.obj ${PATH_OBJ}/main_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-#################################
+${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+#*********************************
 #
 #	Objects
 #
-#################################
+#*********************************
 
 ${PATH_OBJ}/main.obj: ${PATH_SRC}/main.cpp ${PATH_INCLUDE}/main.h
-	$(CC) $(CFLAG) -o $@ -c $< ${UNIT_TEST}
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $< ${UNIT_TEST}
+
+${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/problem_data.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/main_tests.obj: ${PATH_TESTS}/main_tests.cpp
-	$(CC) $(CFLAG) -o $@ -c $<
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
-#################################
+${PATH_OBJ}/problem_data_tests.obj: ${PATH_TESTS}/problem_data_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+#*********************************
 #
 #	Utilities
 #
-#################################
+#*********************************
 
 clean:
-	-rm -R ${PATH_BIN}/*.*
+	-rm -R ${PATH_BIN}/*
+	-rm -R ${PATH_OBJ}/*
+
+copy_scenarios:
+	-cp -R ${PATH_TESTS}/scenarios ${PATH_BIN}/scenarios

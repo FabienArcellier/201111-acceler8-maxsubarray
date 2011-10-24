@@ -18,7 +18,7 @@ if (EXPRESSION)\
   strcpy(format, "D: %s = ");\
   strcat(format, FORMAT);\
   printf(format,#VARIABLE, VARIABLE);\
-  puts("");\
+  cout << '\n';\
 }
 
 #endif
