@@ -1,8 +1,8 @@
 format 76
 
-classcanvas 128003 class_ref 128003 // Matrice
+classcanvas 128003 class_ref 128003 // ProblemData
   draw_all_relations default hide_attributes default hide_operations yes hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 347 82 2000
+  xyz 286 67 2000
 end
 classcanvas 128131 class_ref 128131 // Input
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -12,7 +12,7 @@ end
 classcanvas 128259 class_ref 128259 // Output
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   color lightgreen
-  xyz 301 269 2000
+  xyz 291 272 2000
 end
 note 128771 "Sortie standart cout"
   xyzwh 496 275 2000 173 39
@@ -20,7 +20,7 @@ note 129027 "Entrees en argument du main"
   xyzwh 84 173 2000 139 47
 note 129283 "La gestion du temps n'est pas préconisé dans l'énoncé de ce problème"
   xyzwh 76 385 2000 187 85
-classcanvas 129411 class_ref 134787 // Params
+classcanvas 129411 class_ref 134787 // ApplicationSettings
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 479 101 2000
 end

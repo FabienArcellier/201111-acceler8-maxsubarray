@@ -73,7 +73,7 @@ Post-cond : assert (ftell($FileHandle) == 0)"
   xyzwh 348 283 2000 239 87
 activityobjectcanvas 135171 activityobject_ref 134659 // activity object $Matrice
   show_infonote default drawing_language default show_stereotype_properties default
-  xyzwh 177 528 2000 61 45
+  xyzwh 177 528 2000 77 45
 end
 note 135427 "[return $Matrice]"
   xyzwh 270 1187 2000 151 35
@@ -110,7 +110,7 @@ flowcanvas 132355 flow_ref 136323 // <flow>
 end
 flowcanvas 132483 flow_ref 136451 // <flow> [Not EOF]
   
-  from ref 131331 z 2006 label "<flow> [Not EOF]" xyz 258 1005 3000 to point 372 994
+  from ref 131331 z 2006 label "<flow> [Not EOF]" xyz 258 1005 2006 to point 372 994
   line 132739 z 2006 to ref 130819
   show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
 end

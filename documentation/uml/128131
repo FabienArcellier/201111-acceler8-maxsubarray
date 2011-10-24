@@ -1,6 +1,6 @@
 format 76
 "Design" // Design
-  revision 2
+  revision 5
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -100,18 +100,6 @@ ${inlines}
 	
 	
 	
-      end
-
-      classrelation 134659 // (<<include>>)
-	relation 134659 ---- name "<<include>>"
-	  a role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 134659 // (<<include>>)
-	  b role_name "" private
-	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
-"
-	    classrelation_ref 134787 // (<<include>>)
       end
 
       operation 128515 "InstanciateMatriceFromFilename"

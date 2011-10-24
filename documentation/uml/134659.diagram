@@ -28,7 +28,7 @@ activityactioncanvas 130051 activityaction_ref 136323 // activity action Creer M
 end
 activityobjectcanvas 130435 activityobject_ref 134787 // activity object Matrice
   show_infonote default drawing_language default show_stereotype_properties default
-  xyzwh 142 797 2000 55 45
+  xyzwh 142 797 2000 77 45
 end
 activityactioncanvas 130691 activityaction_ref 136451 // activity action Chercher les bornes de la sous matrice maximum
   show_infonote default drawing_language default show_stereotype_properties default
@@ -85,7 +85,7 @@ note 134275 "Cette activité est totalement séquentielle"
   xyzwh 265 32 2000 183 59
 activityobjectcanvas 134787 activityobject_ref 134915 // activity object Params
   show_infonote default drawing_language default show_stereotype_properties default
-  xyzwh 133 432 2000 55 45
+  xyzwh 133 432 2000 109 45
 end
 activitynodecanvas 135683 activitynode_ref 135683 // decision
   xyz 146 114 2000
@@ -125,7 +125,7 @@ flowcanvas 130563 flow_ref 139267 // <flow>
 end
 flowcanvas 131459 flow_ref 139651 // <flow>[not DernierFichier]
   
-  from ref 131203 z 2001 label "<flow>[not DernierFichier]" xyz 239 1251.5 2001 to point 418 1238
+  from ref 131203 z 2001 label "<flow>[not DernierFichier]" xyz 239 1251 2001 to point 418 1238
   line 131587 z 2001 to ref 130947
   show_infonote default drawing_language default show_stereotype_properties default write_horizontally default
 end

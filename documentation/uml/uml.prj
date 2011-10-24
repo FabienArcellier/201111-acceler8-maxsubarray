@@ -1,6 +1,6 @@
 format 76
 "uml"
-  revision 2
+  revision 3
   modified_by 3 "Fabien_2"
 
 
@@ -38,8 +38,9 @@ format 76
 
   mark_for_import
   
-  ncouples 1
+  ncouples 2
   key "html dir" value "d:/Temp/Report/"
+  key "check-in-cmd" value "specify the command containing %file and %dir or %dironly"
   package_ref 128003 // Analyse
 
   package_ref 128131 // Design

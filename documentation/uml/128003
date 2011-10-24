@@ -1,6 +1,6 @@
 format 76
 "Analyse" // Analyse
-  revision 3
+  revision 7
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -47,7 +47,7 @@ format 76
       size A4
     end
 
-    class 128003 "Matrice"
+    class 128003 "ProblemData"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -56,7 +56,7 @@ format 76
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 128003 "numbers"
+      attribute 128003 "Matrice"
 	public explicit_type "int16"
 	stereotype "vector"
 	cpp_decl ""
@@ -93,7 +93,27 @@ format 76
 	idl_decl ""
       end
 
-      operation 128387 "SearchMaxSubarray"
+      attribute 141571 "containOnlyPositiveNumbers"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 141699 "containOnlyNegativeNumbers"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      operation 135299 "SetValue"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -107,8 +127,88 @@ format 76
 	
       end
 
-      classrelation 134787 // (<<include>>)
-	relation_ref 134659 // <<include>>
+      operation 136067 "GetValue"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135427 "GetWidth"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135555 "GetLength"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135939 "GetMatrice"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135683 "ContainOnlyPositiveNumbers"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 135811 "ContainOnlyNegativeNumbers"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
 
@@ -125,6 +225,16 @@ format 76
 	private explicit_type "string"
 	stereotype "vector"
 	cpp_decl ""
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 148227 "processor_number"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
 	java_decl ""
 	php_decl ""
 	python_decl ""
@@ -155,7 +265,7 @@ format 76
 	relation 128131 -_->
 	  a default
 	    classrelation_ref 128131 // <dependency>
-	  b parent class_ref 128003 // Matrice
+	  b parent class_ref 128003 // ProblemData
       end
     end
 
@@ -271,7 +381,7 @@ Pas de controle d'intégrité"
       end
 
       activityobject 134659 "$Matrice"
-	 type class_ref 128003 // Matrice
+	 type class_ref 128003 // ProblemData
 	unordered 
 	flow 138499 "<flow>"
 	  on activityaction_ref 135683 // activity action Dupliquer le pointeur $Matrice -> numbers vers $PtrElement
@@ -335,7 +445,7 @@ Pas de controle d'intégrité"
       end
 
       activityobject 134787 "Matrice"
-	 type class_ref 128003 // Matrice
+	 type class_ref 128003 // ProblemData
 	unordered 
 	flow 148227 "<flow>"
 	  on activityaction_ref 136451 // activity action Chercher les bornes de la sous matrice maximum
@@ -408,7 +518,7 @@ Pas de controle d'intégrité"
       end
 
       activityobject 134915 "Params"
-	 type class_ref 134787 // Params
+	 type class_ref 134787 // ApplicationSettings
 	unordered 
 	flow 140931 "<flow>"
 	  on activityaction_ref 136195 // activity action Obtenir le premier nom de fichier dans $Filename depuis $Args
@@ -448,7 +558,7 @@ Pas de controle d'intégrité"
       end
     end
 
-    class 134787 "Params"
+    class 134787 "ApplicationSettings"
       visibility package 
       cpp_decl "${comment}${template}class ${name}${inherit} {
 ${members}};
@@ -460,7 +570,7 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
-      attribute 135043 "count_processor"
+      attribute 135043 "processor_number"
 	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -468,6 +578,256 @@ ${inlines}
 	php_decl ""
 	python_decl ""
 	idl_decl ""
+      end
+    end
+  end
+
+  componentview 128003 "Planning"
+    //component diagram settings
+    package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+    componentdiagram 147715 "Planning"
+      package_name_in_tab default show_context default auto_label_position default draw_all_relations no shadow default
+      draw_component_as_icon default show_component_req_prov default show_component_rea default show_stereotype_properties default
+      size A0
+    end
+
+    component 128003 "Release to Intel"
+      comment "Responsible : N/D
+
+Date : 15/11/2011"
+      simplerelation 128259
+	-_->
+	  on component_ref 128131 // Package according requirements
+      end
+
+      simplerelation 130819
+	-_->
+	  on component_ref 129923 // Rassemble la documentation sous Zotero
+      end
+
+      simplerelation 131203
+	-_->
+	  on component_ref 130179 // S'inscrire
+      end
+    end
+
+    component 128131 "Package according requirements"
+      comment "Responsible : N/D
+Execute target from makefile : package
+
+Result :
+/release/solution_FArcellier_MRiviere.zip
+
+Tester le package sur la MTL en suivant les instructions suivantes :
+	- unzip  P secret solution.zip
+	- make clean
+	- make
+	- time ./run 40 input1.txt input2.txt input3.txt > output.txt"
+      simplerelation 128387
+	-_->
+	  on component_ref 128387 // Software Validation
+      end
+
+      simplerelation 128899
+	-_->
+	  on component_ref 129283 // Ecrire une target release dans le makefile principal
+      end
+
+      simplerelation 129155
+	-_->
+	  on component_ref 128259 // Write a readme
+      end
+    end
+
+    component 128259 "Write a readme"
+      comment "Responsible : N/D
+/documentation/readme.pdf"
+    end
+
+    component 128387 "Software Validation"
+      comment "Responsible : N/D
+
+Execute all the test cases, check results are valids.
+"
+      simplerelation 131971
+	-_->
+	  on component_ref 130307 // Benchmarker sans Debug
+      end
+    end
+
+    component 128643 "Write a makefile for release"
+      comment "Responsible : N/D
+
+/build/makefile.liv
+
+Il doit posseder la target suivante :
+- clean : Restaure l'environnement de compilation
+
+La target par défaut doit générer un fichier binaire appellé run dans le dossier du makefile"
+      simplerelation 131459
+	-_->
+	  on component_ref 130307 // Benchmarker sans Debug
+      end
+    end
+
+    component 128771 "Developper les fonctions pour lire un fichier input"
+      simplerelation 129283
+	-_->
+	  on component_ref 128899 // Mettre en place un makefile
+      end
+    end
+
+    component 128899 "Mettre en place un makefile"
+      comment "Responsible : FAR
+
+Target du makefile:
+- production : compile le programme
+- tests : compile les tests unitaires
+- clean : Efface le contenu des fichiers bin et obj"
+      simplerelation 130691
+	-_->
+	  on component_ref 129795 // Mettre en place les dossiers et le SVN
+      end
+    end
+
+    component 129027 "Developper l'algorithme de resolution en 1 passe"
+      comment "Responsible : N/D
+
+Si il n'y a que des nombres négatifs, prendre les coordonnées du plus grand d'entre eux
+Si il n'y a que des nombres positifs, prendre les coordonnées de la matrice entiere
+
+Au chargement du fichier"
+      simplerelation 128515
+	-_->
+	  on component_ref 128771 // Developper les fonctions pour lire un fichier input
+      end
+
+      simplerelation 129667
+	-_->
+	  on component_ref 129539 // Paralléliser
+      end
+    end
+
+    component 129155 "Preparer un environnement de benchmark"
+      comment "Responsible : N/D
+
+Cet environnement a une double responsabilité :
+- Valider le logiciel
+- Benchmarker l'execution
+
+Le dossier benchmark contient :
+- plusieurs fichiers input
+- 1 fichier output de reference (on comparera le fichier obtenu avec celui ci à la fin)
+- 1 script shell qui execute le programme avec la commande time (stockage dans 2 fichiers à la date et l'heure courante, du temps obtenu et des resultats)
+	Le script shell verifie a la fin de l'execution que le fichier resultat est identique à la reference
+	Ce script doit aussi construire un profilage des performances
+- 1 dossier result qui contiendra les resultats
+
+"
+      simplerelation 129411
+	-_->
+	  on component_ref 128899 // Mettre en place un makefile
+      end
+    end
+
+    component 129283 "Ecrire une target release dans le makefile principal"
+      comment "Responsible : N/D
+
+- Cree un dossier release si il n'existe pas
+- Copie le dossier src, include, makefile.liv
+- Zip le resultat avec le password secret"
+      simplerelation 128771
+	-_->
+	  on component_ref 128643 // Write a makefile for release
+      end
+    end
+
+    component 129411 "Implementer l'algorithme de Kadan 2D"
+      simplerelation 129539
+	-_->
+	  on component_ref 128771 // Developper les fonctions pour lire un fichier input
+      end
+    end
+
+    component 129539 "Paralléliser"
+      comment "Utilisation :
+- OpenMP
+- TBB
+- PThread"
+      simplerelation 131843
+	-_->
+	  on component_ref 130435 // Structurer le programme
+      end
+    end
+
+    component 129667 "Benchmarker avec Debug"
+      simplerelation 130179
+	-_->
+	  on component_ref 129155 // Preparer un environnement de benchmark
+      end
+
+      simplerelation 130307
+	-_->
+	  on component_ref 129539 // Paralléliser
+      end
+
+      simplerelation 130947
+	-_->
+	  on component_ref 130051 // Demander les accès MTL
+      end
+    end
+
+    component 129795 "Mettre en place les dossiers et le SVN"
+      comment "Responsible : FAR"
+    end
+
+    component 129923 "Rassemble la documentation sous Zotero"
+      comment "Responsible : FAR & MRI"
+    end
+
+    component 130051 "Demander les accès MTL"
+      comment "Responsible : N/D"
+      simplerelation 131075
+	-_->
+	  on component_ref 129155 // Preparer un environnement de benchmark
+      end
+    end
+
+    component 130179 "S'inscrire"
+      comment "Responsible : FAR
+
+Envoyer un mail à Anthony pour l'inscription"
+    end
+
+    component 130307 "Benchmarker sans Debug"
+      simplerelation 131331
+	-_->
+	  on component_ref 129667 // Benchmarker avec Debug
+      end
+    end
+
+    component 130435 "Structurer le programme"
+      simplerelation 131587
+	-_->
+	  on component_ref 129027 // Developper l'algorithme de resolution en 1 passe
+      end
+
+      simplerelation 131715
+	-_->
+	  on component_ref 129411 // Implementer l'algorithme de Kadan 2D
+      end
+
+      simplerelation 138627
+	-_->
+	  on component_ref 136963 // Developper l'algorithme 1D
+      end
+    end
+
+    component 136963 "Developper l'algorithme 1D"
+      simplerelation 138499
+	-_->
+	  on component_ref 128771 // Developper les fonctions pour lire un fichier input
       end
     end
   end
