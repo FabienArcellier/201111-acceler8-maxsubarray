@@ -68,25 +68,25 @@ ProblemData * InstanciateProblemDataFromFilename (char filename[])
   int row = 0, column = 0;
   short buffer = 0;
   char cbuffer = '\0';
-  int i = 0, j = 0;
+  int x = 0, y = 0;
   
-  DEBUG_IF (1, "%d", file_handle.eof ());
   CountRowColumnFromFilehandle (file_handle, &row, &column);
-  DEBUG_IF (1, "%d", file_handle.eof ());
+
   
   ProblemData *data = NULL;
-  data = new ProblemData (row, column);
+  data = new ProblemData (column, row);
+  
  
   while (file_handle.eof () == 0)
   {
     file_handle >> buffer;
-    file_handle >> cbuffer;
-    i++; 
-    (*data).SetValue(i, j, buffer);
+    file_handle.get (cbuffer);
+    (*data).SetValue(x, y, buffer);
+    x++; 
     if (cbuffer == '\n')
     {
-      j++;
-      i = 0;
+      y++;
+      x = 0;
     }
   }
   
@@ -111,7 +111,6 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
     assert (column != NULL);
     assert (row != NULL);
     
-    cout << file_handle.eof () << '\n';
     file_handle.get (character);
     
     if (character == ' ')
@@ -130,11 +129,12 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
       *column = 0;
     }
   }
+  file_handle.clear ();
   file_handle.seekg (0, ios::beg);
   
   // Pour the space after the last element is missing
-  *column = column_reference + 1; 
-  
-  cout << file_handle.tellg () << '\n';
+  *column = column_reference + 1;
+  (*row)++; 
+
   assert (file_handle.tellg () == 0);
 }

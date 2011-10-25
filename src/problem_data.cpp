@@ -41,7 +41,7 @@ void ProblemData::SetValue (int x, int y, short value)
   assert (y < this -> length);
   assert (y >= 0);
   
-  (this -> matrice)[x * y] = value;
+  (this -> matrice)[(this -> width * y) + x] = value;
   this -> containOnlyPositiveNumbers = this -> containOnlyPositiveNumbers & (value >= 0);
   this -> containOnlyNegativeNumbers = this -> containOnlyNegativeNumbers & (value <= 0);
 }
@@ -58,7 +58,7 @@ short ProblemData::GetValue (int x, int y)
   assert (y < this -> length);
   assert (y >= 0);
   
-  return (this -> matrice)[x * y];
+  return (this -> matrice)[(this -> width * y) + x];
 }
 
 /*!

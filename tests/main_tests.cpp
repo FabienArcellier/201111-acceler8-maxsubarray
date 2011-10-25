@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
+#include "debug.h"
 #include "test.h"
 #include "problem_data.h"
 #include "main.h"
@@ -45,9 +46,9 @@ void InstanciateProblemDataFromFilenameTest ()
   ProblemData *data = NULL;
   data = InstanciateProblemDataFromFilename ("scenarios/scenario1/data");
   
-  TEST (data -> GetWidth () == 3);
-  TEST (data -> GetLength () == 5);
+  TEST (data -> GetWidth () == 5);
+  TEST (data -> GetLength () == 3);
   TEST (data -> GetValue (0, 0) == 0);
-  cout << "data -> GetValue (2, 4) " << data -> GetValue (2, 4) << '\n';
-  TEST (data -> GetValue (2, 4) == 15);
+  TEST (data -> GetValue (1, 0) == 0);
+  TEST (data -> GetValue (4, 2) == 15);
 }

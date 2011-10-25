@@ -56,10 +56,14 @@ void ProblemDataWithBothValuesTest ()
   {
     for (int j = 0; j < 5; j++)
     {
-      data2.SetValue (i, j, i - 2);
+      data2.SetValue (j, i, j - 2);
     }
   }
   
+  TEST (data2.GetValue(0, 0) == -2);
+  TEST (data2.GetValue(1, 0) == -1);
+  TEST (data2.GetValue(2, 1) == 0);
+  TEST (data2.GetValue(2, 2) == 0);
   TEST (data2.ContainOnlyPositiveNumbers() == 0);
   TEST (data2.ContainOnlyNegativeNumbers() == 0);
 }
