@@ -22,7 +22,7 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new AllNegativeMatrix;
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
     */  
-  else if(data.GetWidth() == 0)
+  else if(data.GetWidth() == 1)
     return new OneDimensionMatrix;
   else
     return new TwoDimensionMatrix;
@@ -73,8 +73,6 @@ void algorithm::SetWorkerThreads(short threads_quantity)
   */
 void AllPositiveMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
-  /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
-    */ 
   this->SetCoordMaximumSubArray(0,0,data.GetLength()-1,data.GetWidth()-1);
 }
 
@@ -98,21 +96,39 @@ void AllNegativeMatrix::resolve(ProblemData &data, short AllocatedThreads)
     if(matrice[i] == 0)
       break;
   }
-
-  /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
-  */ 
   this->SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
 
 }
 
 
-/** \todo Réaliser l'algorithme de Kadane sur cette fonction en 1D
-  */
 /** \brief Algorithme de résolution dans le cas d'une matrice à une seule dimension
   */
 void OneDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
-}
+    /* maximum subarray a[k..l] of a[1..n] */
+    int max_coordinate[2] = {0,0};
+    short* matrice = data.GetMatrice();
+    int s=1<<31, t = 0, j = 1;
+    for (int i=0;i<data.GetLength();i++)
+    {
+        t = t + matrice[i];
+        if (t > s) 
+        {
+          max_coordinate[0] = j;
+          max_coordinate[1] = i;
+          s = t;
+        }
+        if (t < 0)
+        {
+          t = 0; 
+          j = i + 1;
+        }
+    }
+    this->SetCoordMaximumSubArray(max_coordinate[0],0,max_coordinate[1],0);
+    
+}    
+    
+
 
 /** \todo Réaliser l'algorithme de Kadane sur cette fonction en 2D
   */
