@@ -49,7 +49,7 @@ endif
 run: ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-tests: ${PATH_BIN}/problem_data_tests ${PATH_BIN}/main_tests copy_scenarios
+tests: ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios
 
 #*********************************
 #
@@ -61,6 +61,9 @@ ${PATH_BIN}/main_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/main.obj ${PATH
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 #*********************************
@@ -75,11 +78,19 @@ ${PATH_OBJ}/main.obj: ${PATH_SRC}/main.cpp ${PATH_INCLUDE}/main.h
 ${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/problem_data.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
+${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+
 ${PATH_OBJ}/main_tests.obj: ${PATH_TESTS}/main_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/problem_data_tests.obj: ${PATH_TESTS}/problem_data_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/algorithm_tests.obj: ${PATH_TESTS}/algorithm_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
 
 #*********************************
 #
