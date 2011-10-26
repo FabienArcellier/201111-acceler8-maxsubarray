@@ -16,9 +16,9 @@ using namespace std;
   */
 algorithm* SelectAlgorithm (ProblemData& data)
 {
-  if(data.ContainOnlyPositiveNumbers() == 0)
+  if(data.ContainOnlyPositiveNumbers() == 1)
 	return new AllPositiveMatrix;
-  else if(data.ContainOnlyNegativeNumbers() == 0)
+  else if(data.ContainOnlyNegativeNumbers() == 1)
     return new AllNegativeMatrix;
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
     */  
@@ -35,6 +35,15 @@ algorithm* SelectAlgorithm (ProblemData& data)
 int* algorithm::GetCoordMaximumSubArray()
 {
   return this->coord_maximum_subarray;
+}
+
+
+void algorithm::SetCoordMaximumSubArray(int x0, int y0, int x1, int y1)
+{
+  this->coord_maximum_subarray[0] = x0;
+  this->coord_maximum_subarray[1] = y0;
+  this->coord_maximum_subarray[2] = x1;
+  this->coord_maximum_subarray[3] = y1;
 }
 
 void algorithm::AfficherMaximumSubArray()
@@ -58,44 +67,42 @@ void algorithm::SetWorkerThreads(short threads_quantity)
 }
 
 
+
+
 /** \brief Algorithme de résolution dans le cas d'une matrice totalement positive
   */
-void AllPositiveMatrix::resolve(ProblemData *data, short AllocatedThreads)
+void AllPositiveMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
-  this->coord_maximum_subarray[0] = 0;
-  this->coord_maximum_subarray[1] = 0;
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
     */ 
-  this->coord_maximum_subarray[2] = data->GetLength();
-  this->coord_maximum_subarray[3] = data->GetWidth();
+  this->SetCoordMaximumSubArray(0,0,data.GetLength()-1,data.GetWidth()-1);
 }
 
 
 /** \brief Algorithme de résolution dans le cas d'une matrice totalement négative
   */
-void AllNegativeMatrix::resolve(ProblemData *data, short AllocatedThreads)
+void AllNegativeMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
-  short* matrice = data->GetMatrice();
+  short* matrice = data.GetMatrice();
   
   short max_value = matrice[0];
   int max_coordinate[2] = {0,0};
   
   
-  for(int i=1;i<data->GetWidth()*data->GetLength();i++){
-	if(matrice[i]>max_value){
-		max_value = matrice[i];
-		max_coordinate[0] = i - (int)((int)((i/data->GetLength())-1)*data->GetLength());
-		max_coordinate[1] = i - (int)(i/data->GetLength());
-	}
-	if(matrice[i] == 0)
-		break;
-  }	
-  this->coord_maximum_subarray[0] = max_coordinate[0];
-  this->coord_maximum_subarray[1] = max_coordinate[1];
+  for(int i=1;i<data.GetWidth()*data.GetLength();i++){
+    if(matrice[i]>max_value){
+      max_value = matrice[i];
+      max_coordinate[0] = i - (int)(((i-1)/data.GetLength())*data.GetLength());
+      max_coordinate[1] = (int)(i/data.GetLength());
+    }
+    if(matrice[i] == 0)
+      break;
+  }
+
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
   */ 
-  this->coord_maximum_subarray[2] = max_coordinate[0];
-  this->coord_maximum_subarray[3] = max_coordinate[1];
+  this->SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
+
 }
 
 
@@ -103,7 +110,7 @@ void AllNegativeMatrix::resolve(ProblemData *data, short AllocatedThreads)
   */
 /** \brief Algorithme de résolution dans le cas d'une matrice à une seule dimension
   */
-void OneDimensionMatrix::resolve(ProblemData *data, short AllocatedThreads)
+void OneDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
 }
 
@@ -111,6 +118,6 @@ void OneDimensionMatrix::resolve(ProblemData *data, short AllocatedThreads)
   */
 /** \brief Algorithme de résolution dans le cas d'une matrice à 2 dimensions
   */
-void TwoDimensionMatrix::resolve(ProblemData *data, short AllocatedThreads)
+void TwoDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
 {
 }

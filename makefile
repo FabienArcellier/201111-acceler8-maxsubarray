@@ -12,7 +12,7 @@ PATH_OBJ=obj
 
 INCLUDE_DIRS=-I "${PATH_INCLUDE}" -I "${PATH_INCLUDE}/private"
 
-ifeq ($(TEST), 1)
+ifeq ($(TEST),1)
 	UNIT_TEST=-DUNIT_TEST
 endif
 
