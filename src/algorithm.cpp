@@ -3,13 +3,18 @@
 #include <memory>
 #include <new>
 #include <iostream>
+#include <vector>
+#include <list>
+
+
+using namespace std;
 
 #include "problem_data.h"
 #include "algorithm.h"
 
 
 
-using namespace std;
+
 
 
 /** \brief Selection de l'algorithme en fonction de la composition de la matrice - Peut etre amené à évoluer après benchmarck
@@ -32,29 +37,22 @@ algorithm* SelectAlgorithm (ProblemData& data)
 
 /** \brief Méthodes de la fonction algorithme pour accéder aux attributs privés (Set/Get/Display)
   */
-int* algorithm::GetCoordMaximumSubArray()
+list<vector<int> > * algorithm::GetCoordMaximumSubArray()
 {
-  return this->coord_maximum_subarray;
+  return &(this->coord_maximum_subarray);
 }
 
 
 void algorithm::SetCoordMaximumSubArray(int x0, int y0, int x1, int y1)
 {
-  this->coord_maximum_subarray[0] = x0;
-  this->coord_maximum_subarray[1] = y0;
-  this->coord_maximum_subarray[2] = x1;
-  this->coord_maximum_subarray[3] = y1;
+  vector<int> coordonnes;
+  coordonnes.push_back(x0);
+  coordonnes.push_back(y0);
+  coordonnes.push_back(x1);
+  coordonnes.push_back(y1);
+  this->coord_maximum_subarray.push_back(coordonnes);
 }
 
-void algorithm::AfficherMaximumSubArray()
-{
-  if(this->coord_maximum_subarray)
-  {
-	for(int i=0;i<4;i++)
-		cout << this->coord_maximum_subarray[i] << " ";
-	cout << endl;
-  }
-}
 
 short algorithm::GetWorkerThreads()
 {
@@ -71,7 +69,7 @@ void algorithm::SetWorkerThreads(short threads_quantity)
 
 /** \brief Algorithme de résolution dans le cas d'une matrice totalement positive
   */
-void AllPositiveMatrix::resolve(ProblemData &data, short AllocatedThreads)
+void AllPositiveMatrix::resolve(ProblemData &data)
 {
   this->SetCoordMaximumSubArray(0,0,data.GetLength()-1,data.GetWidth()-1);
 }
@@ -79,7 +77,7 @@ void AllPositiveMatrix::resolve(ProblemData &data, short AllocatedThreads)
 
 /** \brief Algorithme de résolution dans le cas d'une matrice totalement négative
   */
-void AllNegativeMatrix::resolve(ProblemData &data, short AllocatedThreads)
+void AllNegativeMatrix::resolve(ProblemData &data)
 {
   short* matrice = data.GetMatrice();
   
@@ -103,7 +101,7 @@ void AllNegativeMatrix::resolve(ProblemData &data, short AllocatedThreads)
 
 /** \brief Algorithme de résolution dans le cas d'une matrice à une seule dimension
   */
-void OneDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
+void OneDimensionMatrix::resolve(ProblemData &data)
 {
     /* maximum subarray a[k..l] of a[1..n] */
     int max_coordinate[2] = {0,0};
@@ -134,6 +132,6 @@ void OneDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
   */
 /** \brief Algorithme de résolution dans le cas d'une matrice à 2 dimensions
   */
-void TwoDimensionMatrix::resolve(ProblemData &data, short AllocatedThreads)
+void TwoDimensionMatrix::resolve(ProblemData &data)
 {
 }

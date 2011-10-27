@@ -1,7 +1,7 @@
 #include "test.h"
 #include "problem_data.h"
 #include "algorithm.h"
-
+#include <iostream>
 
 /* Tests declaration */
 void AlgorithmResolvePositiveMatrix ();
@@ -32,10 +32,13 @@ void AlgorithmResolvePositiveMatrix ()
 
   algorithm* testAlgorithme = NULL;
   testAlgorithme  = SelectAlgorithm (data);
-  testAlgorithme->resolve(data,1);
-  int* tableautest = testAlgorithme->GetCoordMaximumSubArray();
-  TEST(tableautest[0] == 0);
-  TEST(tableautest[2] == 4);
+  testAlgorithme->resolve(data);
+  list< vector<int> > * tableautest = testAlgorithme->GetCoordMaximumSubArray();
+  list< vector<int> > :: iterator test_value;
+  test_value = (*tableautest).begin();
+  TEST((*test_value)[0] == 0);
+  TEST((*test_value)[2] == 4);
+  cout <<  (*test_value)[2] << endl;
   
 }
 
@@ -54,9 +57,12 @@ void AlgorithmResolveNegativeMatrix ()
   
   algorithm* testAlgorithme = NULL;
   testAlgorithme  = SelectAlgorithm (data);
-  testAlgorithme->resolve(data,1);
-  int* tableautest = testAlgorithme->GetCoordMaximumSubArray();
-  TEST(tableautest[2] == 4);
+  testAlgorithme->resolve(data);
+  list< vector<int> > * tableautest = testAlgorithme->GetCoordMaximumSubArray();
+  list< vector<int> > :: iterator test_value;
+  test_value = (*tableautest).begin();
+  TEST((*test_value)[2] == 4);
+  TEST((*test_value)[0] == 4);
   
 }
 
@@ -72,8 +78,11 @@ void AlgorithmResolve1DMatrix()
   }
   algorithm* testAlgorithme = NULL;
   testAlgorithme  = SelectAlgorithm (data);
-  testAlgorithme->resolve(data,1);
-  int* tableautest = testAlgorithme->GetCoordMaximumSubArray();
-  TEST(tableautest[0] == 4);
-  TEST(tableautest[2] == 9);
+  testAlgorithme->resolve(data);
+  list< vector<int> > * tableautest = testAlgorithme->GetCoordMaximumSubArray();
+  list< vector<int> > :: iterator test_value;
+  test_value = (*tableautest).begin();
+  TEST((*test_value)[0] == 4);
+  TEST((*test_value)[2] == 9);
+  cout << (*test_value)[2]  << endl;
 }
