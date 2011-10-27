@@ -46,16 +46,19 @@ endif
 #
 #*********************************
 
-run: ${PATH_OBJ}/main.obj
-	$(CC) $(LDFLAG) -o $@ $^
+run: clean ${PATH_BIN}/run copy_scenarios
 
 tests: ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios
+
 
 #*********************************
 #
 #	Binaire
 #
 #*********************************
+
+${PATH_BIN}/run : ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/main_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/main.obj ${PATH_OBJ}/main_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
@@ -103,4 +106,4 @@ clean:
 	-rm -R ${PATH_OBJ}/*
 
 copy_scenarios:
-	-cp -R ${PATH_TESTS}/scenarios ${PATH_BIN}/scenarios
+	-svn export --force ${PATH_TESTS}/scenarios ${PATH_BIN}/scenarios

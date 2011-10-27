@@ -3,8 +3,12 @@
 using namespace std;
 
 #include <assert.h>
+#include <string>
+#include <vector>
+#include <cstdlib>
 #include "debug.h"
 #include "problem_data.h"
+#include "algorithm.h"
 #include "main.h"
 
 
@@ -12,10 +16,40 @@ using namespace std;
 
 int main (int argc, char *argv[])
 {
-  if (argc < 2)
+  if (argc < 3)
   {
     DisplayHelp ();
   }
+  
+  ApplicationSettings application_settings;
+  application_settings.processor_number = atoi (argv[1]);
+  
+  vector<string> filenames;
+  for (int i = 2; i < argc; i++)
+  {    
+    string filename (argv[i]);
+    filenames.push_back (filename);
+  }
+  
+  assert (filenames.size() == (uint)(argc - 2));
+  int count_filename = filenames.size();
+  for (int i = 0; i < count_filename; i++)
+  {
+    ProblemData *data = NULL;
+    data = InstanciateProblemDataFromFilename (filenames[i]);
+    algorithm * Algorithm = NULL;
+    Algorithm = SelectAlgorithm (*data);
+    Algorithm -> SetWorkerThreads ((short) (application_settings.processor_number));
+    Algorithm -> resolve (*data);
+    list<vector<int> > *tab = NULL;
+    tab = Algorithm -> GetCoordMaximumSubArray ();
+    DisplayMaxSubarray (tab);
+    
+    delete Algorithm;
+    delete data;
+  }
+  
+  cout << "Fin du traitement" << endl;
 }
 
 #endif
@@ -35,30 +69,37 @@ void DisplayHelp ()
 /*!
  * \brief Display the coord of an array with 4 items
  */
-void DisplayMaxSubarray (int max_subarray_bornes[])
+void DisplayMaxSubarray (list<vector<int> > * max_subarray_bornes)
 {
   assert (max_subarray_bornes != NULL);
+  max_subarray_bornes -> front ();
+  std::list<vector<int> >::iterator it = max_subarray_bornes -> begin();
   
-  for (int i = 0; i < 4; i++)
-  {
-    cout << max_subarray_bornes[i];
-    if (i < 3)
+  for (; it != max_subarray_bornes -> end(); it++)
+  {    
+    for (int j = 0; j < 4; j++)
     {
-      cout << " ";
-    }
-    else
-    {
-      cout << "\n";
+      cout << (*it)[j] << flush;
+      if (j < 3)
+      {
+        cout << " ";
+      }
+      else
+      {
+        cout << "\n";
+      }
     }
   }
+  
+  max_subarray_bornes -> front ();
 }
 
 /*!
  * \brief Load data into an instance of ProblemData
  */
-ProblemData * InstanciateProblemDataFromFilename (char filename[])
+ProblemData * InstanciateProblemDataFromFilename (string filename)
 {
-  ifstream file_handle (filename);
+  ifstream file_handle (filename.c_str());
   if (!file_handle)
   {
     cerr << "Can't open " << filename;
@@ -71,7 +112,6 @@ ProblemData * InstanciateProblemDataFromFilename (char filename[])
   int x = 0, y = 0;
   
   CountRowColumnFromFilehandle (file_handle, &row, &column);
-
   
   ProblemData *data = NULL;
   data = new ProblemData (column, row);
@@ -81,7 +121,7 @@ ProblemData * InstanciateProblemDataFromFilename (char filename[])
   {
     file_handle >> buffer;
     file_handle.get (cbuffer);
-    (*data).SetValue(x, y, buffer);
+    data -> SetValue(x, y, buffer);
     x++; 
     if (cbuffer == '\n')
     {
@@ -104,7 +144,6 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
   
   int column_reference = 0;
   char character = '\0';
-  cout << file_handle.tellg () << '\n';
   while (file_handle.eof () == 0)
   {
     // Invariant, there was a segmentation fault because of NULL value
