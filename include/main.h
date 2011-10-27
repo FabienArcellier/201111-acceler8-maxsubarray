@@ -12,7 +12,7 @@ void DisplayHelp ();
 /*!
  * \brief Display the coord of an array with 4 items
  */
-void DisplayMaxSubarray (list<vector<int> > * max_subarray_bornes);
+void DisplayMaxSubarray (list<vector<int> > & max_subarray_bornes);
 
 /*!
  * \brief Load data into an instance of ProblemData

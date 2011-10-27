@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
-using namespace std;
-
+#include <cstdlib>
 #include <assert.h>
 #include <string>
 #include <vector>
-#include <cstdlib>
+#include <list>
+using namespace std;
+
 #include "debug.h"
 #include "problem_data.h"
 #include "algorithm.h"
@@ -43,7 +44,7 @@ int main (int argc, char *argv[])
     Algorithm -> resolve (*data);
     list<vector<int> > *tab = NULL;
     tab = Algorithm -> GetCoordMaximumSubArray ();
-    DisplayMaxSubarray (tab);
+    DisplayMaxSubarray (*tab);
     
     delete Algorithm;
     delete data;
@@ -69,13 +70,12 @@ void DisplayHelp ()
 /*!
  * \brief Display the coord of an array with 4 items
  */
-void DisplayMaxSubarray (list<vector<int> > * max_subarray_bornes)
+void DisplayMaxSubarray (list<vector<int> > & max_subarray_bornes)
 {
-  assert (max_subarray_bornes != NULL);
-  max_subarray_bornes -> front ();
-  std::list<vector<int> >::iterator it = max_subarray_bornes -> begin();
+  max_subarray_bornes.front ();
+  std::list<vector<int> >::iterator it = max_subarray_bornes.begin();
   
-  for (; it != max_subarray_bornes -> end(); it++)
+  for (; it != max_subarray_bornes.end(); it++)
   {    
     for (int j = 0; j < 4; j++)
     {
@@ -90,8 +90,6 @@ void DisplayMaxSubarray (list<vector<int> > * max_subarray_bornes)
       }
     }
   }
-  
-  max_subarray_bornes -> front ();
 }
 
 /*!
