@@ -82,20 +82,33 @@ void AllNegativeMatrix::resolve(ProblemData &data)
   short* matrice = data.GetMatrice();
   
   short max_value = matrice[0];
-  int max_coordinate[2] = {0,0};
+  list< vector<int> > max_coordinate;
+  vector<int> local_max;
+  local_max.push_back(0);
+  local_max.push_back(0);
+  max_coordinate.push_back(local_max);
   
   
   for(int i=1;i<data.GetWidth()*data.GetLength();i++){
     if(matrice[i]>max_value){
       max_value = matrice[i];
-      max_coordinate[0] = i - (int)(((i-1)/data.GetLength())*data.GetLength());
-      max_coordinate[1] = (int)(i/data.GetLength());
+      local_max[0] = i%data.GetWidth();
+      local_max[1] = (int)(i/data.GetWidth());
+      max_coordinate.clear();
+      max_coordinate.push_back(local_max);
+    }
+    else if(matrice[i] == max_value){
+      local_max[0] = i%data.GetWidth();
+      local_max[1] = (int)(i/data.GetWidth());
+      max_coordinate.push_back(local_max);
     }
     if(matrice[i] == 0)
       break;
   }
-  this->SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
-
+  list< vector<int> > :: iterator k;
+  for(k=max_coordinate.begin();k!=max_coordinate.end();k++){
+    this->SetCoordMaximumSubArray((*k)[0],(*k)[1],(*k)[0],(*k)[1]);
+  }
 }
 
 
@@ -104,26 +117,45 @@ void AllNegativeMatrix::resolve(ProblemData &data)
 void OneDimensionMatrix::resolve(ProblemData &data)
 {
     /* maximum subarray a[k..l] of a[1..n] */
-    int max_coordinate[2] = {0,0};
     short* matrice = data.GetMatrice();
-    int s=1<<31, t = 0, j = 1;
+    
+    list< vector<int> > max_coordinate;
+    vector<int> local_max;
+    local_max.push_back(0);
+    local_max.push_back(0);
+    max_coordinate.push_back(local_max);
+    
+    
+    
+    
+    int s=1<<31, t = 0, j = 0;
     for (int i=0;i<data.GetLength();i++)
     {
         t = t + matrice[i];
         if (t > s) 
         {
-          max_coordinate[0] = j;
-          max_coordinate[1] = i;
+          local_max[0] = j;
+          local_max[1] = i;
+          max_coordinate.clear();
+          max_coordinate.push_back(local_max);
           s = t;
         }
+        else if(t==s)
+        {
+          local_max[0] = j;
+          local_max[1] = i;
+          max_coordinate.push_back(local_max); 
+	}
         if (t < 0)
         {
           t = 0; 
           j = i + 1;
         }
     }
-    this->SetCoordMaximumSubArray(max_coordinate[0],0,max_coordinate[1],0);
-    
+    list< vector<int> > :: iterator k;
+  for(k=max_coordinate.begin();k!=max_coordinate.end();k++){
+    this->SetCoordMaximumSubArray((*k)[0],0,(*k)[1],0);
+  }
 }    
     
 
