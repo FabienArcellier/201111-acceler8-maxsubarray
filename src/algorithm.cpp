@@ -191,4 +191,5 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
       }
     }
   }
+  DEBUG_IF (1, max_value);
 }
