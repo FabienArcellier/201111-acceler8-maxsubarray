@@ -1,7 +1,7 @@
 format 76
 "Analyse" // Analyse
-  revision 8
-  modified_by 2 "Maxime"
+  revision 10
+  modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -790,7 +790,6 @@ ${inlines}
 	idl_decl ""
       end
     end
-
   end
 
   componentview 128003 "Planning"
@@ -883,6 +882,9 @@ La target par défaut doit générer un fichier binaire appellé run dans le dossier
     end
 
     component 128771 "Developper les fonctions pour lire un fichier input"
+      comment "Responsible : FAR
+
+- main.cpp"
       simplerelation 129283
 	-_->
 	  on component_ref 128899 // Mettre en place un makefile
@@ -903,7 +905,7 @@ Target du makefile:
     end
 
     component 129027 "Developper l'algorithme de resolution en 1 passe"
-      comment "Responsible : N/D
+      comment "Responsible : MRI
 
 Si il n'y a que des nombres négatifs, prendre les coordonnées du plus grand d'entre eux
 Si il n'y a que des nombres positifs, prendre les coordonnées de la matrice entiere
@@ -1019,6 +1021,12 @@ Envoyer un mail à Anthony pour l'inscription"
     end
 
     component 130435 "Structurer le programme"
+      comment "Responsable : FAR
+
+- main.cpp
+- main.h
+- problem_data.cpp
+- problem_data.h"
       simplerelation 131587
 	-_->
 	  on component_ref 129027 // Developper l'algorithme de resolution en 1 passe
@@ -1036,6 +1044,10 @@ Envoyer un mail à Anthony pour l'inscription"
     end
 
     component 136963 "Developper l'algorithme 1D"
+      comment "Responsable : MRI
+
+- algorithm.cpp
+- algorithm.h"
       simplerelation 138499
 	-_->
 	  on component_ref 128771 // Developper les fonctions pour lire un fichier input

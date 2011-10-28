@@ -1,4 +1,4 @@
-window_sizes 1366 716 320 960 560 82
+window_sizes 1366 716 320 960 580 62
 diagrams
   classdiagram_ref 128003 // MDD
     1040 560 100 4 0 0
@@ -6,17 +6,15 @@ diagrams
     828 448 100 3 36 0
   classdiagram_ref 141187 // Structure
     1040 560 100 4 0 0
-  componentdiagram_ref 147715 // Planning
-    1040 560 100 0 0 810
-  active  activitydiagram_ref 134531 // DFD Creer Matrice depuis Fichier
+  active  componentdiagram_ref 147715 // Planning
+    1040 580 100 0 0 721
+  activitydiagram_ref 134531 // DFD Creer Matrice depuis Fichier
     828 448 100 3 540 0
 end
 show_stereotypes
-selected activitydiagram_ref 134531 // DFD Creer Matrice depuis Fichier
+selected componentdiagram_ref 147715 // Planning
 open
-  class_ref 128131 // Input
-  class_ref 128259 // Output
-  activity_ref 134531 // DFD Creer Matrice depuis Fichier
+  componentview_ref 128003 // Planning
   classview_ref 134531 // Structure
 end
 end
