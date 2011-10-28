@@ -48,7 +48,7 @@ endif
 
 run: clean ${PATH_BIN}/run copy_scenarios
 
-tests: clean_bin ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
+tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
 
 #*********************************

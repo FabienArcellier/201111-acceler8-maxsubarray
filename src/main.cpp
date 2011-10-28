@@ -106,8 +106,6 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   
   int row = 0, column = 0;
   short buffer = 0;
-  char cbuffer = '\0';
-  int x = 0, y = 0;
   
   CountRowColumnFromFilehandle (file_handle, &row, &column);
   
@@ -115,16 +113,12 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   data = new ProblemData (column, row);
   
  
-  while (file_handle.eof () == 0)
+  for (int i = 0; i < column; i++)
   {
-    file_handle >> buffer;
-    file_handle.get (cbuffer);
-    data -> SetValue(x, y, buffer);
-    x++; 
-    if (cbuffer == '\n')
+    for (int j = 0; j < row; j++)
     {
-      y++;
-      x = 0;
+      file_handle >> buffer;
+      data -> SetValue(i, j, buffer);
     }
   }
   
@@ -142,28 +136,45 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
   
   int column_reference = 0;
   char character = '\0';
+  int separator = 0;
+  int new_line = 0;
   while (file_handle.eof () == 0)
   {
     // Invariant, there was a segmentation fault because of NULL value
     assert (column != NULL);
     assert (row != NULL);
-    
     file_handle.get (character);
     
-    if (character == ' ')
+    if (character == ' ' && separator == 0)
     {
       (*column)++;
+      separator = 1;
     }
     else if (character == '\n')
     {
-      (*row)++;
+      if (*column != 0)
+      {
+        (*row)++;
+      }
+      
+      if (separator == 1 && *column != 0)
+      {
+        (*column)--;
+      }
+      
       if (column_reference == 0)
       {
         column_reference = *column;
       }
-      
-      assert (*column == column_reference);
+
+      assert (*column == column_reference || *column == 0);
       *column = 0;
+      new_line = 1;
+    }
+    else
+    {
+      separator = 0;
+      new_line = 0;
     }
   }
   file_handle.clear ();
@@ -171,7 +182,10 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
   
   // Pour the space after the last element is missing
   *column = column_reference + 1;
-  (*row)++; 
+  if (new_line == 0)
+  {
+    (*row)++; 
+  }
 
   assert (file_handle.tellg () == 0);
 }

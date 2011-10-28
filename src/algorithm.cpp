@@ -166,7 +166,7 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
       int borne_droite_y = 0;
       for(int current_row_y_high = 0; current_row_y_high < data.GetLength(); current_row_y_high++) 
       {
-        tableau_colonne[current_row_y_high] += data.GetValue (current_row_y_high, borne_droite_x);
+        tableau_colonne[current_row_y_high] += data.GetValue (borne_droite_x, current_row_y_high);
         value += tableau_colonne[current_row_y_high];
         
         if (value > max_value)
@@ -175,13 +175,13 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
           borne_gauche_y = current_row_y_low;
           borne_droite_y = current_row_y_high;
           this -> ClearCoordMaximumSubArray ();
-          this -> SetCoordMaximumSubArray (borne_gauche_y, borne_gauche_x, borne_droite_y, borne_droite_x);
+          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value == max_value)
         {
           borne_gauche_y = current_row_y_low;
           borne_droite_y = current_row_y_high;
-          this -> SetCoordMaximumSubArray (borne_gauche_y, borne_gauche_x, borne_droite_y, borne_droite_x);
+          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value < 0)
         {
