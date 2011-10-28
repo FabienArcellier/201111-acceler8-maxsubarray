@@ -14,6 +14,7 @@ class algorithm
     short GetWorkerThreads();
     list< vector<int> > * GetCoordMaximumSubArray();
     void SetCoordMaximumSubArray(int x0, int y0, int x1, int y1);
+    void ClearCoordMaximumSubArray ();
   private:
     short WorkerThreads;
     list < vector<int> >  coord_maximum_subarray;

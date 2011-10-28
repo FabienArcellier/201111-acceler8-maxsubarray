@@ -21,9 +21,9 @@
 #define TEST(X)\
   if(X)\
   {\
-    fprintf(stdout,"\t%s\tSuccess\r\n", #X);\
+  cout << "\t" << #X << " Success" << endl << flush;\
   }\
   else\
-    fprintf(stdout,"\t%s\tFailed\r\n", #X);
+    cout << "\t" << #X << " Failed" << endl << flush;
 
 #endif

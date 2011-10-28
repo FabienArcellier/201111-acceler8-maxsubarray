@@ -1,9 +1,5 @@
 
 /* Macro qui affiche la valeur d'une variable si une expression == 1
- * FORMAT : %lld : entier long long
- *          %d : entier int
- *          %f: flottant
- *          %s: chaine de caracteres
  * */
 
 #include <string.h>
@@ -11,20 +7,16 @@
 
 #ifndef NDEBUG
 
-#define DEBUG_IF(EXPRESSION, FORMAT, VARIABLE) \
+#define DEBUG_IF(EXPRESSION, VARIABLE) \
 if (EXPRESSION)\
 {\
-  char format[20];\
-  strcpy(format, "D: %s = ");\
-  strcat(format, FORMAT);\
-  printf(format,#VARIABLE, VARIABLE);\
-  cout << '\n';\
+  cout << "D:" << #VARIABLE << " : " << VARIABLE << endl << flush;\
 }
 
 #endif
 
 #ifdef NDEBUG
 
-#define DEBUG_IF(EXPRESSION, FORMAT, VARIABLE)
+#define DEBUG_IF(EXPRESSION, VARIABLE)
 
 #endif

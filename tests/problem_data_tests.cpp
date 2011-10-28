@@ -1,5 +1,8 @@
+#include <iostream>
 #include "test.h"
 #include "problem_data.h"
+
+using namespace std;
 
 /* Tests declaration */
 void ProblemDataWithOnlyPositiveValuesTest ();
