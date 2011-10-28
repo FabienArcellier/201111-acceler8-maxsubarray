@@ -46,9 +46,9 @@ endif
 #
 #*********************************
 
-run: clean ${PATH_BIN}/run copy_scenarios
+run: clean_bin ${PATH_BIN}/run copy_scenarios
 
-tests: ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios
+tests: clean_bin ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
 
 #*********************************
@@ -101,9 +101,14 @@ ${PATH_OBJ}/algorithm_tests.obj: ${PATH_TESTS}/algorithm_tests.cpp
 #
 #*********************************
 
-clean:
-	-rm -R ${PATH_BIN}/*
+clean: clean_bin	
 	-rm -R ${PATH_OBJ}/*
+
+clean_bin:
+	-rm -R ${PATH_BIN}/*
+
+copy_tests_file:
+	cp build/tests.sh ${PATH_BIN}/
 
 copy_scenarios:
 	-svn export --force ${PATH_TESTS}/scenarios ${PATH_BIN}/scenarios
