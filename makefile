@@ -46,9 +46,9 @@ endif
 #
 #*********************************
 
-run: clean ${PATH_BIN}/run copy_scenarios
+run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios
 
-tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
+tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
 
 #*********************************
@@ -57,16 +57,25 @@ tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/algorithm_tests ${PATH_B
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/verif : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/main_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/main.obj ${PATH_OBJ}/main_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
+${PATH_BIN}/verif_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj ${PATH_OBJ}/verif_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/input_reader_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/input_reader_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 #*********************************
@@ -78,20 +87,31 @@ ${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.
 ${PATH_OBJ}/main.obj: ${PATH_SRC}/main.cpp ${PATH_INCLUDE}/main.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $< ${UNIT_TEST}
 
+${PATH_OBJ}/verif.obj: ${PATH_SRC}/verif.cpp ${PATH_INCLUDE}/verif.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $< ${UNIT_TEST}
+
 ${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/problem_data.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
+${PATH_OBJ}/input_reader.obj:${PATH_SRC}/input_reader.cpp ${PATH_INCLUDE}/input_reader.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/main_tests.obj: ${PATH_TESTS}/main_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/verif_tests.obj: ${PATH_TESTS}/verif_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/problem_data_tests.obj: ${PATH_TESTS}/problem_data_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/algorithm_tests.obj: ${PATH_TESTS}/algorithm_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/input_reader_tests.obj: ${PATH_TESTS}/input_reader_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 
