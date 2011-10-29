@@ -1,6 +1,6 @@
 format 76
 "Analyse" // Analyse
-  revision 10
+  revision 11
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -209,6 +209,10 @@ format 76
 	
 	
 	
+      end
+
+      classrelation 135043 // <association>
+	relation_ref 134787 // <association>
       end
     end
 
@@ -790,7 +794,6 @@ ${inlines}
 	idl_decl ""
       end
     end
-
   end
 
   componentview 128003 "Planning"

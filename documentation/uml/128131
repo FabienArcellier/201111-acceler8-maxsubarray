@@ -1,6 +1,6 @@
 format 76
 "Design" // Design
-  revision 5
+  revision 6
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -102,6 +102,57 @@ ${inlines}
 	
       end
 
+      classrelation 134659 // <association>
+	relation 134659 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 134659 // <association>
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 134787 // <association>
+      end
+
+      classrelation 134915 // <association>
+	relation 134787 ----
+	  a role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 134915 // <association>
+	  b role_name "" private
+	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
+"
+	    classrelation_ref 135043 // <association>
+      end
+    end
+
+    class 147843 "input_reader"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      operation 128643 "CountRowColFromDataFile"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       operation 128515 "InstanciateMatriceFromFilename"
 	public explicit_return_type ""
 	nparams 0
@@ -116,18 +167,8 @@ ${inlines}
 	
       end
 
-      operation 128643 "CountRowColFromDataFile"
-	public explicit_return_type ""
-	nparams 0
-	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
-"
-	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
-  ${body}}
-"
-	
-	
-	
-	
+      classrelation 134787 // <association>
+	relation_ref 134659 // <association>
       end
     end
   end
