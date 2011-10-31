@@ -32,16 +32,16 @@ int ProblemData::GetLength ()
 /*!
  * \brief Permet d'enregistrer une valeur de type short dans la matrice
  * 
- * x et y doivent être defini à l'interieur de la matrice
+ * row et column doivent être defini à l'interieur de la matrice
  */
-void ProblemData::SetValue (int x, int y, short value)
+void ProblemData::SetValue (int column, int row, short value)
 {
-  assert (x < this -> width);
-  assert (x >= 0);
-  assert (y < this -> length);
-  assert (y >= 0);
+  assert (column < this -> width);
+  assert (column >= 0);
+  assert (row < this -> length);
+  assert (row >= 0);
   
-  (this -> matrice)[(this -> width * y) + x] = value;
+  (this -> matrice)[(this -> width * row) + column] = value;
   this -> containOnlyPositiveNumbers = this -> containOnlyPositiveNumbers & (value >= 0);
   this -> containOnlyNegativeNumbers = this -> containOnlyNegativeNumbers & (value <= 0);
 }
@@ -49,22 +49,22 @@ void ProblemData::SetValue (int x, int y, short value)
 /*!
  * \brief Permet de recuperer une valeur de type short de la matrice
  * 
- * x et y doivent être defini à l'interieur de la matrice
+ * row et column doivent être defini à l'interieur de la matrice
  */
-short ProblemData::GetValue (int x, int y)
+short ProblemData::GetValue (int column, int row)
 {
-  assert (x < this -> width);
-  assert (x >= 0);
-  assert (y < this -> length);
-  assert (y >= 0);
+  assert (column < this -> width);
+  assert (column >= 0);
+  assert (row < this -> length);
+  assert (row >= 0);
   
-  return (this -> matrice)[(this -> width * y) + x];
+  return (this -> matrice)[(this -> width * row) + column];
 }
 
 /*!
  * \brief Retourne le tableau 1D matrice. Doit etre utilise en lecture seule
  * 
- * indice = x * length + y
+ * indice = row * width + column
  */
 short* ProblemData::GetMatrice ()
 {
