@@ -44,9 +44,7 @@ void AlgorithmResolvePositiveMatrix ()
   list< vector<int> > :: iterator test_value;
   test_value = (*tableautest).begin();
   TEST((*test_value)[0] == 0);
-  TEST((*test_value)[2] == 4);
-  cout <<  (*test_value)[2] << endl;
-  
+  TEST((*test_value)[2] == 4);  
 }
 
 void AlgorithmResolveNegativeMatrix ()
@@ -92,7 +90,7 @@ void AlgorithmResolve1DMatrix()
   test_value = (*tableautest).begin();
   TEST((*test_value)[0] == 4);
   TEST((*test_value)[2] == 9);
-  cout << (*test_value)[2]  << endl;
+
 }
 
 void AlgorithmResolveMultiNegativeMatrice ()

@@ -26,7 +26,7 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new AllNegativeMatrix;
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
     */  
-  else if(data.GetWidth() == 1)
+  else if(data.GetWidth() == 1 || data.GetLength() == 1)
     return new OneDimensionMatrix;
   else
     return new TwoDimensionMatrix;
@@ -78,7 +78,7 @@ void algorithm::SetWorkerThreads(short threads_quantity)
   */
 void AllPositiveMatrix::resolve(ProblemData &data)
 {
-  this->SetCoordMaximumSubArray(0,0,data.GetLength()-1,data.GetWidth()-1);
+  this->SetCoordMaximumSubArray(0,0,data.GetWidth()-1,data.GetLength()-1);
 }
 
 
@@ -96,7 +96,7 @@ void AllNegativeMatrix::resolve(ProblemData &data)
   for(int i=1;i<data.GetWidth()*data.GetLength();i++){
     if(matrice[i] > max_value){
       max_value = matrice[i];
-      max_coordinate[0] = i - (int)(((i-1)/data.GetLength())*data.GetLength());
+      max_coordinate[0] = (int)(i%data.GetLength());
       max_coordinate[1] = (int)(i/data.GetLength());
       
       this -> ClearCoordMaximumSubArray();
@@ -104,7 +104,7 @@ void AllNegativeMatrix::resolve(ProblemData &data)
     }
     else if (matrice[i] == max_value)
     {
-      max_coordinate[0] = i - (int)(((i-1)/data.GetLength())*data.GetLength());
+      max_coordinate[0] = (int)(i%data.GetLength());
       max_coordinate[1] = (int)(i/data.GetLength());
       this -> SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
     }
@@ -117,17 +117,28 @@ void AllNegativeMatrix::resolve(ProblemData &data)
 void OneDimensionMatrix::resolve(ProblemData &data)
 {
     /* maximum subarray a[k..l] of a[1..n] */
-    int max_coordinate[2] = {0,0};
     short* matrice = data.GetMatrice();
+    int matrice_length = data.GetLength();
+    int matrice_width = data.GetWidth();
     int s=1<<31, t = 0, j = 1;
-    for (int i=0;i<data.GetLength();i++)
+    for (int i=0;i<matrice_length *matrice_width;i++)
     {
         t = t + matrice[i];
         if (t > s) 
         {
-          max_coordinate[0] = j;
-          max_coordinate[1] = i;
+          this -> ClearCoordMaximumSubArray();
+          if(matrice_width== 1)
+            this->SetCoordMaximumSubArray(j,0,i,0);
+          else
+             this->SetCoordMaximumSubArray(0,j,0,i);
           s = t;
+        }
+        else if( t==s)
+        {
+          if(matrice_width == 1)
+            this->SetCoordMaximumSubArray(j,0,i,0);
+          else
+             this->SetCoordMaximumSubArray(0,j,0,i);
         }
         if (t < 0)
         {
@@ -135,7 +146,6 @@ void OneDimensionMatrix::resolve(ProblemData &data)
           j = i + 1;
         }
     }
-    this->SetCoordMaximumSubArray(max_coordinate[0],0,max_coordinate[1],0);
     
 }    
     
