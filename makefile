@@ -36,8 +36,8 @@ endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O3 -ftree-vectorizer-verbose=2 -mtune=native -funroll-loops ${INCLUDE_DIRS}
-  LDFLAG=-Wall -lm -O3 -lstdc++ -ftree-vectorizer-verbose=2 -mtune=native -funroll-loops ${INCLUDE_DIRS}
+  CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS}
+  LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS}
 endif
 
 #*********************************
