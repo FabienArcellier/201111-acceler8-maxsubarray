@@ -36,8 +36,8 @@ endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O3 -fopenmp ${INCLUDE_DIRS}
-  LDFLAG=-Wall -lm -fopenmp -lstdc++ ${INCLUDE_DIRS}
+  CFLAG=-Wall -lm -O3 -ftree-vectorizer-verbose=2 -mtune=native -funroll-loops ${INCLUDE_DIRS}
+  LDFLAG=-Wall -lm -O3 -lstdc++ -ftree-vectorizer-verbose=2 -mtune=native -funroll-loops ${INCLUDE_DIRS}
 endif
 
 #*********************************
@@ -48,7 +48,7 @@ endif
 
 run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios
 
-tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
+tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
 
 #*********************************
@@ -57,7 +57,7 @@ tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PAT
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/verif : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj
@@ -72,7 +72,10 @@ ${PATH_BIN}/verif_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj ${PA
 ${PATH_BIN}/input_reader_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/input_reader_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
@@ -90,6 +93,9 @@ ${PATH_OBJ}/main.obj: ${PATH_SRC}/main.cpp ${PATH_INCLUDE}/main.h
 ${PATH_OBJ}/verif.obj: ${PATH_SRC}/verif.cpp ${PATH_INCLUDE}/verif.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $< ${UNIT_TEST}
 
+${PATH_OBJ}/debug_algorithm.obj: ${PATH_SRC}/debug_algorithm.cpp ${PATH_INCLUDE}/debug_algorithm.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
 ${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/problem_data.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
@@ -103,6 +109,9 @@ ${PATH_OBJ}/main_tests.obj: ${PATH_TESTS}/main_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/verif_tests.obj: ${PATH_TESTS}/verif_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/debug_algorithm_tests.obj: ${PATH_TESTS}/debug_algorithm_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/problem_data_tests.obj: ${PATH_TESTS}/problem_data_tests.cpp

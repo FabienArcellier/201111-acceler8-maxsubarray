@@ -196,10 +196,10 @@ void AlgorithmResolve2DMatrixMultiSolution()
   DEBUG_IF (!((*test_value)[1] == 1), (*test_value)[1]);
   TEST(((*test_value)[1] == 1));
   
-  DEBUG_IF (!((*test_value)[2] == 1), (*test_value)[2]);
+  DEBUG_IF (!((*test_value)[2] == 2), (*test_value)[2]);
   TEST((*test_value)[2] == 1);
   
-  DEBUG_IF (!((*test_value)[3] == 2), (*test_value)[3]);
+  DEBUG_IF (!((*test_value)[3] == 1), (*test_value)[3]);
   TEST((*test_value)[3] == 2);
   
   test_value++;

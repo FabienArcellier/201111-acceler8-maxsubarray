@@ -29,6 +29,8 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   ProblemData *data = NULL;
   data = new ProblemData (column, row);
   
+  DEBUG_IF (1, column);
+  DEBUG_IF (1, row);
   
   for (int i = 0; i < row; i++)
   {

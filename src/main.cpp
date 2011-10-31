@@ -38,11 +38,13 @@ int main (int argc, char *argv[])
   for (int i = 0; i < count_filename; i++)
   {
     ProblemData *data = NULL;
+    cout << "test" << endl;
     data = InstanciateProblemDataFromFilename (filenames[i]);
     algorithm * Algorithm = NULL;
     Algorithm = SelectAlgorithm (*data);
     Algorithm -> SetWorkerThreads ((short) (application_settings.processor_number));
     Algorithm -> resolve (*data);
+    cout << "test" << endl;
     list<vector<int> > *tab = NULL;
     tab = Algorithm -> GetCoordMaximumSubArray ();
     DisplayMaxSubarray (*tab);

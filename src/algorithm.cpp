@@ -14,11 +14,7 @@ using namespace std;
 
 #include "problem_data.h"
 #include "algorithm.h"
-
-
-
-
-
+#include "debug_algorithm.h"
 
 /** \brief Selection de l'algorithme en fonction de la composition de la matrice - Peut etre amené à évoluer après benchmarck
   */
@@ -151,42 +147,56 @@ void OneDimensionMatrix::resolve(ProblemData &data)
   */
 void TwoDimensionMatrix::resolve(ProblemData &data)
 {
+//   string report_name ("resolve.log");
+//   DebugAlgorithm debug (report_name, data);
+  short *matrice = data.GetMatrice ();
+  int matrice_length = data.GetLength();
+  int matrice_width = data.GetWidth();
+  
   int max_value = data.GetValue (0, 0);
   this -> SetCoordMaximumSubArray (0, 0, 0, 0);
   
-  for(int borne_gauche_x = 0; borne_gauche_x < data.GetWidth(); borne_gauche_x++) 
+  // Parallelisable
+  for(int borne_gauche_y = 0; borne_gauche_y < matrice_length; borne_gauche_y++) 
   {
-    vector<int> tableau_colonne (data.GetLength(), 0);
+    vector<int> tableau_colonne (matrice_width, 0);
     
-    for(int borne_droite_x = borne_gauche_x  ; borne_droite_x < data.GetWidth(); borne_droite_x++) 
+    // Parallelisable à condition de faire sauter le cache
+    for(int borne_droite_y = borne_gauche_y  ; borne_droite_y < matrice_length; borne_droite_y++) 
     {
       int value = 0;
-      int current_row_y_low = 0;
-      int borne_gauche_y = 0;
-      int borne_droite_y = 0;
-      for(int current_row_y_high = 0; current_row_y_high < data.GetLength(); current_row_y_high++) 
+      int borne_gauche_x = 0;
+      
+      // Non parallelisable (Dependante des calculs precedents)
+      for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
       {
-        tableau_colonne[current_row_y_high] += data.GetValue (borne_droite_x, current_row_y_high);
-        value += tableau_colonne[current_row_y_high];
+        tableau_colonne[borne_droite_x] += matrice [borne_droite_x + borne_droite_y * matrice_width];
+        value += tableau_colonne[borne_droite_x];
         
+//         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//         debug.WriteValue (value);
+//         debug.WriteMaxValue (max_value);
+//         debug.WriteEmptyLine ();
+//         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//         debug.WriteEmptyLine ();
+//         
         if (value > max_value)
         {
           max_value = value;
-          borne_gauche_y = current_row_y_low;
-          borne_droite_y = current_row_y_high;
           this -> ClearCoordMaximumSubArray ();
           this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value == max_value)
         {
-          borne_gauche_y = current_row_y_low;
-          borne_droite_y = current_row_y_high;
           this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value < 0)
         {
+//           string text_reset_zero ("Reset value zero");
+//           debug.WriteString (text_reset_zero);
+          
           value = 0;
-          current_row_y_low = current_row_y_high + 1;
+          borne_gauche_x = borne_droite_x + 1;
         }
       }
     }
