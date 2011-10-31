@@ -16,6 +16,10 @@ ifeq ($(TEST),1)
 	UNIT_TEST=-DUNIT_TEST
 endif
 
+ifeq ($(GPROF),1)
+	G_PROF=-pg
+endif
+
 ifeq ($(TARGET),MTL)
   export LD_LIBRARY_PATH=/opt/mpfr/lib:/opt/gmp/lib:/opt/mpc/lib
 endif
@@ -36,8 +40,8 @@ endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS}
-  LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS}
+  CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
+  LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
 endif
 
 #*********************************
