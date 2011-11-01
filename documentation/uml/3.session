@@ -1,25 +1,20 @@
 window_sizes 1366 716 320 960 580 62
 diagrams
   classdiagram_ref 128003 // MDD
-    1040 560 100 4 0 0
+    1040 560 100 4 288 0
   activitydiagram_ref 134659 // DFD
     828 448 100 3 36 0
-  classdiagram_ref 141187 // Structure
-    1040 560 100 4 0 0
-  active  componentdiagram_ref 147715 // Planning
+  active  classdiagram_ref 141187 // Structure
+    1040 580 100 4 72 0
+  componentdiagram_ref 147715 // Planning
     1040 580 100 0 0 265
   activitydiagram_ref 134531 // DFD Creer Matrice depuis Fichier
     828 448 100 3 540 0
-  activitydiagram_ref 154243 // DFD
-    828 464 100 4 0 0
-  activitydiagram_ref 154371 // DFD 2dMaxSelect
-    828 464 100 4 216 0
 end
 show_stereotypes
-selected componentdiagram_ref 147715 // Planning
+selected class_ref 128514 // TwoDimensionsMatrix
 open
-  classview_ref 128003 // MDD
-  componentview_ref 128003 // Planning
-  classview_ref 134531 // Structure
+  class_ref 128002 // Algorithm
+  class_ref 154371 // DebugAlgorithm
 end
 end
