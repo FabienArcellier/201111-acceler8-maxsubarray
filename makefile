@@ -45,14 +45,14 @@ ifeq ($(TARGET),STATION)
 endif
 
 #*********************************
-#
+#main_tests
 #	Target
 #
 #*********************************
 
 run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios copy_benchmark
 
-tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
+tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests ${PATH_BIN}/cache_problem_data_tests copy_scenarios copy_tests_file
 
 
 #*********************************
@@ -85,6 +85,9 @@ ${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algo
 ${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
+${PATH_BIN}/cache_problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/cache_problem_data_tests.obj 
+	$(CC) $(LDFLAG) -o $@ $^
+
 #*********************************
 #
 #	Objects
@@ -106,6 +109,9 @@ ${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/probl
 ${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
+${PATH_OBJ}/cache_problem_data.obj: ${PATH_SRC}/cache_problem_data.cpp ${PATH_INCLUDE}/cache_problem_data.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
 ${PATH_OBJ}/input_reader.obj:${PATH_SRC}/input_reader.cpp ${PATH_INCLUDE}/input_reader.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
@@ -119,6 +125,9 @@ ${PATH_OBJ}/debug_algorithm_tests.obj: ${PATH_TESTS}/debug_algorithm_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/problem_data_tests.obj: ${PATH_TESTS}/problem_data_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/cache_problem_data_tests.obj: ${PATH_TESTS}/cache_problem_data_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/algorithm_tests.obj: ${PATH_TESTS}/algorithm_tests.cpp
