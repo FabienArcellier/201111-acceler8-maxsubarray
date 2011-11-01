@@ -32,8 +32,8 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new OneDimensionMatrix;
   else
   {
-    //return new TwoDimensionMatrix;
-    return new TwoDimensionMatrixWithCache;
+    return new TwoDimensionMatrix;
+    //return new TwoDimensionMatrixWithCache;
   }
 }
 
