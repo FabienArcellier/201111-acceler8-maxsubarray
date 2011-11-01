@@ -52,7 +52,7 @@ endif
 
 run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios copy_benchmark
 
-tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests ${PATH_BIN}/cache_problem_data_tests copy_scenarios copy_tests_file
+tests: clean ${PATH_BIN}/coords_maximum_subarray_tests ${PATH_BIN}/problem_data_tests ${PATH_BIN}/cache_problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
 
 #*********************************
@@ -61,7 +61,7 @@ tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PAT
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/verif : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj
@@ -76,16 +76,19 @@ ${PATH_BIN}/verif_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj ${PA
 ${PATH_BIN}/input_reader_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/input_reader_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
+${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+	$(CC) $(LDFLAG) -o $@ $^
+
+${PATH_BIN}/cache_problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/cache_problem_data_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/problem_data_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/cache_problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/cache_problem_data_tests.obj 
+${PATH_BIN}/coords_maximum_subarray_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/coords_maximum_subarray_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 #*********************************
@@ -100,16 +103,19 @@ ${PATH_OBJ}/main.obj: ${PATH_SRC}/main.cpp ${PATH_INCLUDE}/main.h
 ${PATH_OBJ}/verif.obj: ${PATH_SRC}/verif.cpp ${PATH_INCLUDE}/verif.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $< ${UNIT_TEST}
 
-${PATH_OBJ}/debug_algorithm.obj: ${PATH_SRC}/debug_algorithm.cpp ${PATH_INCLUDE}/debug_algorithm.h
+${PATH_OBJ}/cache_problem_data.obj: ${PATH_SRC}/cache_problem_data.cpp ${PATH_INCLUDE}/cache_problem_data.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/problem_data.obj: ${PATH_SRC}/problem_data.cpp ${PATH_INCLUDE}/problem_data.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
+${PATH_OBJ}/debug_algorithm.obj: ${PATH_SRC}/debug_algorithm.cpp ${PATH_INCLUDE}/debug_algorithm.h
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
 ${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
-${PATH_OBJ}/cache_problem_data.obj: ${PATH_SRC}/cache_problem_data.cpp ${PATH_INCLUDE}/cache_problem_data.h
+${PATH_OBJ}/coords_maximum_subarray.obj: ${PATH_SRC}/coords_maximum_subarray.cpp ${PATH_INCLUDE}/coords_maximum_subarray.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/input_reader.obj:${PATH_SRC}/input_reader.cpp ${PATH_INCLUDE}/input_reader.h
@@ -131,6 +137,9 @@ ${PATH_OBJ}/cache_problem_data_tests.obj: ${PATH_TESTS}/cache_problem_data_tests
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/algorithm_tests.obj: ${PATH_TESTS}/algorithm_tests.cpp
+	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+
+${PATH_OBJ}/coords_maximum_subarray_tests.obj: ${PATH_TESTS}/coords_maximum_subarray_tests.cpp
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
 
 ${PATH_OBJ}/input_reader_tests.obj: ${PATH_TESTS}/input_reader_tests.cpp

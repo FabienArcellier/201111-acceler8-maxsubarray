@@ -1,8 +1,13 @@
+using namespace std;
+
 #include "test.h"
 #include "debug.h"
-#include "problem_data.h"
-#include "algorithm.h"
 #include <iostream>
+#include <list>
+#include <vector>
+#include "problem_data.h"
+#include "coords_maximum_subarray.h"
+#include "algorithm.h"
 
 /* Tests declaration */
 void AlgorithmResolvePositiveMatrix ();

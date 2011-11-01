@@ -9,6 +9,7 @@ using namespace std;
 
 #include "debug.h"
 #include "problem_data.h"
+#include "coords_maximum_subarray.h"
 #include "algorithm.h"
 #include "input_reader.h"
 #include "main.h"

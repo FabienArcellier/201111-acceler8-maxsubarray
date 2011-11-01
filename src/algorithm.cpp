@@ -13,6 +13,7 @@
 using namespace std;
 
 #include "problem_data.h"
+#include "coords_maximum_subarray.h"
 #include "algorithm.h"
 #include "debug_algorithm.h"
 
@@ -38,18 +39,13 @@ algorithm* SelectAlgorithm (ProblemData& data)
   */
 list<vector<int> > * algorithm::GetCoordMaximumSubArray()
 {
-  return &(this->coord_maximum_subarray);
+  return this->coord_maximum_subarray.Get ();
 }
 
 
 void algorithm::SetCoordMaximumSubArray(int x0, int y0, int x1, int y1)
 {
-  vector<int> coordonnes;
-  coordonnes.push_back(x0);
-  coordonnes.push_back(y0);
-  coordonnes.push_back(x1);
-  coordonnes.push_back(y1);
-  this->coord_maximum_subarray.push_back(coordonnes);
+  this->coord_maximum_subarray.Add (x0, y0, x1, y1);
 }
 
 /*!
@@ -57,7 +53,7 @@ void algorithm::SetCoordMaximumSubArray(int x0, int y0, int x1, int y1)
  */
 void algorithm::ClearCoordMaximumSubArray ()
 {
-  this->coord_maximum_subarray.clear ();
+  this->coord_maximum_subarray.Clear ();
 }
 
 

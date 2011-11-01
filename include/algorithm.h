@@ -8,7 +8,7 @@ using namespace std;
 
 class algorithm
 {
-  public:  
+  public:
     virtual void resolve(ProblemData &data) = 0;
     void SetWorkerThreads(short threads_quantity);
     short GetWorkerThreads();
@@ -17,7 +17,7 @@ class algorithm
     void ClearCoordMaximumSubArray ();
   private:
     short WorkerThreads;
-    list < vector<int> >  coord_maximum_subarray;
+    CoordsMaximumSubarray coord_maximum_subarray;
 };
 
 algorithm* SelectAlgorithm (ProblemData &data);
