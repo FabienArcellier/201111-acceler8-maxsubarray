@@ -28,13 +28,13 @@ ifeq ($(TARGET),MTL)
   ifeq ($(COMPILATEUR),GCC)
     GCC_VERSION=4.5.1
     PREFIX=/opt/gcc/${GCC_VERSION}/bin
-    CC=$(PREFIX)/gcc
-    CFLAG=-Wall -lm -fopenmp -DNDEBUG=1 -O3 ${INCLUDE_DIRS}
-    LDFLAG=-Wall -lstdc++ -lm -fopenmp ${INCLUDE_DIRS}
+    CC=$(PREFIX)/g++
+    CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native -funroll-loops -DNDEBUG=1 ${INCLUDE_DIRS} ${G_PROF}
+    LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
   else
     CC=icc
-    CFLAG=-Werror-all -O3 -DNDEBUG=1 -openmp -axSSE2 ${INCLUDE_DIRS}
-    LDFLAG=-Werror-all -lstdc++ -openmp -axSSE2 ${INCLUDE_DIRS}
+    CFLAG=-Werror-all -O2 -DNDEBUG=1 -march=native ${INCLUDE_DIRS}
+    LDFLAG=-Werror-all -lstdc++ -march=native ${INCLUDE_DIRS}
   endif
 endif
 
