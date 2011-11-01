@@ -50,7 +50,7 @@ endif
 #
 #*********************************
 
-run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios
+run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios copy_benchmark
 
 tests: clean ${PATH_BIN}/problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
@@ -145,3 +145,6 @@ copy_tests_file:
 
 copy_scenarios:
 	-svn export --force ${PATH_TESTS}/scenarios ${PATH_BIN}/scenarios
+
+copy_benchmark:
+	cp tools/benchmark.sh ${PATH_BIN}/
