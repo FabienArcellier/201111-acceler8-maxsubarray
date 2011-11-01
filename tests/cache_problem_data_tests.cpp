@@ -11,7 +11,7 @@ void CacheProblemDataGetValueSoustraction();
 int main(void)
 {
   CacheProblemDataGetValue();
-  
+  CacheProblemDataGetValueSoustraction();
 }
 
 void CacheProblemDataGetValue()
@@ -27,8 +27,8 @@ void CacheProblemDataGetValue()
     }
   }
   CacheProblemData cachedata(data);
-  TEST(cachedata.GetValue(0,0) == 0);
-  TEST(cachedata.GetValue(2,2) == 19);
+  TEST(cachedata.GetValue(-1,0) == 0);
+  TEST(cachedata.GetValue(1,2) == 19);
 } 
 
 void CacheProblemDataGetValueSoustraction()
@@ -44,7 +44,7 @@ void CacheProblemDataGetValueSoustraction()
     }
   }
   CacheProblemData cachedata(data);
-  TEST(cachedata.GetValue(0,3,0) == 6);
-  TEST(cachedata.GetValue(2,4,2) == 23);  
+  TEST(cachedata.GetValue(0,2,0) == 6);
+  TEST(cachedata.GetValue(2,3,2) == 23);  
   
 }

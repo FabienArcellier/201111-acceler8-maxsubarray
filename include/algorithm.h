@@ -50,3 +50,8 @@ class TwoDimensionMatrix : public algorithm
     void resolve(ProblemData &data);
 };
 
+class TwoDimensionMatrixWithCache : public algorithm
+{
+  public:
+    void resolve(ProblemData &data);
+};

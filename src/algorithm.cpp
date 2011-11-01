@@ -13,6 +13,7 @@
 using namespace std;
 
 #include "problem_data.h"
+#include "cache_problem_data.h"
 #include "coords_maximum_subarray.h"
 #include "algorithm.h"
 #include "debug_algorithm.h"
@@ -30,8 +31,10 @@ algorithm* SelectAlgorithm (ProblemData& data)
   else if(data.GetWidth() == 1 || data.GetLength() == 1)
     return new OneDimensionMatrix;
   else
-    return new TwoDimensionMatrix;
-
+  {
+    //return new TwoDimensionMatrix;
+    return new TwoDimensionMatrixWithCache;
+  }
 }
 
 
@@ -209,3 +212,68 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
   }
   DEBUG_IF (1, max_value);
 }
+
+void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
+{
+//   string report_name ("resolve.log");
+//   DebugAlgorithm debug (report_name, data);
+  short *matrice = data.GetMatrice ();
+  int matrice_length = data.GetLength();
+  int matrice_width = data.GetWidth();
+  
+  int max_value = data.GetValue (0, 0);
+  this -> SetCoordMaximumSubArray (0, 0, 0, 0);
+  
+  
+  CacheProblemData matrice_cache(data);
+  // Parallelisable
+  for(int borne_gauche_y = 0; borne_gauche_y < matrice_length; borne_gauche_y++) 
+  {   
+    
+    // Parallelisable à condition de faire sauter le cache
+    for(int borne_droite_y = borne_gauche_y  ; borne_droite_y < matrice_length; borne_droite_y++) 
+    {
+      int value = 0;
+      int borne_gauche_x = 0;
+      
+      // Non parallelisable (Dependante des calculs precedents)
+      for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
+      {
+        int value = 0;
+
+        for(int i = borne_gauche_y;i <= borne_droite_y; i++)
+	{
+	  value += matrice_cache.GetValue(borne_gauche_x,borne_droite_x,0);
+	}
+//          debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//          debug.WriteValue (value);
+//         debug.WriteMaxValue (max_value);
+//         debug.WriteEmptyLine ();
+//         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//         debug.WriteEmptyLine ();
+        
+        if (value > max_value)
+        {
+          max_value = value;
+          this -> ClearCoordMaximumSubArray ();
+          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+        }
+        else if (value == max_value)
+        {
+          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+        }
+        else if (value < 0)
+        {
+//           string text_reset_zero ("Reset value zero");
+//           debug.WriteString (text_reset_zero);
+          
+          value = 0;
+          borne_gauche_x = borne_droite_x + 1;
+        }
+      }
+    }
+  }
+  DEBUG_IF (1, max_value);
+}
+
+

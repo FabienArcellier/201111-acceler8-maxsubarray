@@ -40,8 +40,8 @@ endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
-  LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
+  CFLAG=-Wall -lm -O2 -ftree-vectorizer-verbose=2 -march=native  ${INCLUDE_DIRS} ${G_PROF}
+  LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native  ${INCLUDE_DIRS} ${G_PROF}
 endif
 
 #*********************************
@@ -61,7 +61,7 @@ tests: clean ${PATH_BIN}/coords_maximum_subarray_tests ${PATH_BIN}/problem_data_
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/verif : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj
@@ -79,7 +79,7 @@ ${PATH_BIN}/input_reader_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/input_r
 ${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/cache_problem_data_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/cache_problem_data_tests.obj
@@ -156,7 +156,7 @@ clean: clean_bin
 	-rm -R ${PATH_OBJ}/*
 
 clean_bin:
-	-rm -R ${PATH_BIN}/*
+	-rm  ${PATH_BIN}/*
 
 copy_tests_file:
 	cp build/tests.sh ${PATH_BIN}/
