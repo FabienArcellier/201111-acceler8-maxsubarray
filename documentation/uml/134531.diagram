@@ -27,7 +27,7 @@ end
 activityactioncanvas 130819 activityaction_ref 135427 // activity action Incrementer $PtrElement de 1
   show_infonote default drawing_language default show_stereotype_properties default
   show_opaque_action_definition default
-  xyzwh 324 863 2000 101 61
+  xyzwh 322 863 2000 101 61
 end
 activityactioncanvas 131075 activityaction_ref 135555 // activity action Deplacer $FileHandle de 1
   show_infonote default drawing_language default show_stereotype_properties default
@@ -60,10 +60,10 @@ end
 activityactioncanvas 134275 activityaction_ref 135939 // activity action Compter nombre de colonnes ($CountCol) et de lignes ($CountRow) dans $FileHandle
   show_infonote default drawing_language default show_stereotype_properties default
   show_opaque_action_definition default
-  xyzwh 141 288 2000 121 89
+  xyzwh 139 291 2000 121 89
   pins
     pincanvas 137219 pin_ref 134659 // $FileHandle
-      xyzwh 190 278 2002 11 11 label_xy 130 268
+      xyzwh 188 281 2002 11 11 label_xy 128 271
     end
   end
 end
@@ -73,7 +73,7 @@ Post-cond : assert (ftell($FileHandle) == 0)"
   xyzwh 348 283 2000 239 87
 activityobjectcanvas 135171 activityobject_ref 134659 // activity object $Matrice
   show_infonote default drawing_language default show_stereotype_properties default
-  xyzwh 177 528 2000 77 45
+  xyzwh 164 534 2000 77 45
 end
 note 135427 "[return $Matrice]"
   xyzwh 270 1187 2000 151 35

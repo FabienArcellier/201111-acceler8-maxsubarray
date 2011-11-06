@@ -1,6 +1,6 @@
 format 76
 "Analyse" // Analyse
-  revision 13
+  revision 15
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -83,7 +83,7 @@ format 76
 	idl_decl ""
       end
 
-      attribute 134915 "length"
+      attribute 134915 "height"
 	private explicit_type "int32"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -155,7 +155,7 @@ format 76
 	
       end
 
-      operation 135555 "GetLength"
+      operation 135555 "GetHeight"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -672,7 +672,9 @@ Execute all the test cases, check results are valids.
 Il doit posseder la target suivante :
 - clean : Restaure l'environnement de compilation
 
-La target par défaut doit générer un fichier binaire appellé run dans le dossier du makefile"
+La target par défaut doit générer un fichier binaire appellé run dans le dossier du makefile
+
+TODO : Definir le compilateur utilisé"
       simplerelation 131459
 	-_->
 	  on component_ref 130307 // Benchmarker sans Debug

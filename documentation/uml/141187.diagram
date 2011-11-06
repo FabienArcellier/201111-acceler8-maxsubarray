@@ -20,7 +20,7 @@ classcanvas 129795 class_ref 128002 // Algorithm
 end
 classcanvas 129923 class_ref 154371 // DebugAlgorithm
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 691 278 2000
+  xyz 619 227 2000
 end
 classcanvas 130179 class_ref 128514 // TwoDimensionsMatrix
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
@@ -44,12 +44,26 @@ classcanvas 133763 class_ref 160899 // TwoDimensionsMatrixParallel
 end
 classcanvas 134019 class_ref 161027 // ApplyKadan2D
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-  xyz 649 835 2000
+  xyz 619 713 2000
 end
 classcanvas 134275 class_ref 161155 // CoordsMaximumSubarray
   draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
   xyz 99 792 2000
 end
+note 135043 "Debug class to log Algorithm behavior
+Invokation commented in the code"
+  xyzwh 801 192 2000 255 57
+classcanvas 135811 class_ref 167683 // TwoDimensionsMatrixWithCache
+  draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+  xyz 456 613 2012
+end
+note 136067 "Experimentation. We expected to get better
+parallelisation by using our own cache system in
+Kadan2d algorithm.
+Experimentation failed."
+  xyzwh 782 581 2000 279 77
+note 136323 "Use reduction"
+  xyzwh 784 397 2000 129 35
 relationcanvas 129539 relation_ref 134659 // <association>
   from ref 128003 z 2001 to ref 129411
   no_role_a no_role_b
@@ -61,12 +75,8 @@ relationcanvas 129667 relation_ref 134787 // <association>
   no_multiplicity_a no_multiplicity_b
 end
 relationcanvas 130051 relation_ref 141315 // <aggregation>
-  from ref 129923 z 2001 to ref 128131
-  no_role_a no_role_b
-  no_multiplicity_a no_multiplicity_b
-end
-relationcanvas 130691 relation_ref 141571 // <dependency>
-  from ref 130179 z 2007 to ref 129923
+  from ref 129923 z 2001 to point 668 204
+  line 134787 z 2001 to ref 128131
   no_role_a no_role_b
   no_multiplicity_a no_multiplicity_b
 end
@@ -103,14 +113,35 @@ end
 relationcanvas 134531 relation_ref 148995 // <aggregation>
   from ref 129795 z 2001 to ref 134275
   no_role_a no_role_b
-  multiplicity_a_pos 161 773 3000 multiplicity_b_pos 161 681 3000
+  multiplicity_a_pos 161 773 3000 multiplicity_b_pos 162 697 3000
 end
 relationcanvas 134659 relation_ref 149123 // <aggregation>
-  decenter_end 709
+  decenter_end 708
   from ref 134019 z 2001 to ref 134275
   no_role_a no_role_b
-  multiplicity_a_pos 265 874 3000 multiplicity_b_pos 632 874 3000
+  multiplicity_a_pos 265 906 3000 multiplicity_b_pos 602 805 3000
+end
+relationcanvas 135171 relation_ref 155779 // <dependency>
+  from ref 130179 z 2007 to ref 129923
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135555 relation_ref 156035 // <dependency>
+  from ref 134019 z 2001 to ref 129923
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end
+relationcanvas 135939 relation_ref 156163 // <generalisation>
+  from ref 135811 z 2013 to ref 129795
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
 end
 line 129283 -_-_
   from ref 128131 z 2001 to ref 129155
+line 135683 -_-_
+  from ref 129923 z 2001 to ref 135043
+line 136195 -_-_
+  from ref 135811 z 2013 to ref 136067
+line 136451 -_-_
+  from ref 133763 z 2007 to ref 136323
 end

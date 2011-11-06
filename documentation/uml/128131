@@ -1,6 +1,6 @@
 format 76
 "Design" // Design
-  revision 8
+  revision 10
   modified_by 3 "Fabien_2"
   // class settings
   //class diagram settings
@@ -43,8 +43,8 @@ format 76
     package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
     show_infonote default drawing_language default show_stereotype_properties default
     classdiagram 141187 "Structure"
-      draw_all_relations default hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
-      size A4
+      draw_all_relations no hide_attributes default hide_operations default hide_getset_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_members_context default show_members_multiplicity default show_members_initialization default show_attribute_modifiers default member_max_width 0 show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_relation_modifiers default show_relation_visibility default show_infonote default shadow default show_stereotype_properties default
+      size A0
     end
 
     class 141315 "Main.c"
@@ -311,6 +311,16 @@ ${inlines}
       idl_decl ""
       explicit_switch_type ""
       
+      attribute 174851 "coord_maximum_subarray"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
       attribute 128002 "workerThreads"
 	private explicit_type "short"
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -363,7 +373,7 @@ ${inlines}
 	
       end
 
-      operation 128514 "GetCoordMaximumSubarray"
+      operation 128514 "GetCoordsMaximumSubarray"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -377,7 +387,7 @@ ${inlines}
 	
       end
 
-      operation 150531 "SetCoordMaximumSubarray"
+      operation 150531 "SetCoordsMaximumSubarray"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -391,7 +401,7 @@ ${inlines}
 	
       end
 
-      operation 150659 "ClearCoordMaximumSubarray"
+      operation 150659 "ClearCoordsMaximumSubarray"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -415,6 +425,14 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 149763 // <aggregation>
+      end
+
+      classrelation 156547 // <dependency>
+	relation 155651 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 156547 // <dependency>
+	  b parent class_ref 154371 // DebugAlgorithm
       end
     end
 
@@ -549,20 +567,20 @@ ${inlines}
 	
       end
 
-      classrelation 142083 // <dependency>
-	relation 141571 -_->
-	  a default
-	    cpp default "#include in source"
-	    classrelation_ref 142083 // <dependency>
-	  b parent class_ref 154371 // DebugAlgorithm
-      end
-
       classrelation 149123 // <generalisation>
 	relation 148611 ---|>
 	  a public
 	    cpp default "${type}"
 	    classrelation_ref 149123 // <generalisation>
 	  b parent class_ref 128002 // Algorithm
+      end
+
+      classrelation 156675 // <dependency>
+	relation 155779 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 156675 // <dependency>
+	  b parent class_ref 154371 // DebugAlgorithm
       end
     end
 
@@ -607,6 +625,7 @@ ${inlines}
 	    classrelation_ref 149251 // <dependency>
 	  b parent class_ref 161027 // ApplyKadan2D
       end
+
     end
 
     class 161027 "ApplyKadan2D"
@@ -635,6 +654,62 @@ ${inlines}
 	
       end
 
+      operation 164099 "join"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 157187 "GetMaxValue"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 164227 "GetProblemData"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 164355 "GetCoordsMaximumSubarray"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       attribute 161411 "problem_data"
 	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
@@ -645,7 +720,17 @@ ${inlines}
 	idl_decl ""
       end
 
-      attribute 161539 "coord_maximum_subarray"
+      attribute 161539 "coords_maximum_subarray"
+	private explicit_type ""
+	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
+"
+	java_decl ""
+	php_decl ""
+	python_decl ""
+	idl_decl ""
+      end
+
+      attribute 168323 "maxValue"
 	private explicit_type ""
 	cpp_decl "    ${comment}${static}${mutable}${volatile}${const}${type} ${name}${value};
 "
@@ -665,6 +750,14 @@ ${inlines}
 	    cpp default "    ${comment}${static}${mutable}${volatile}${const}${type} * ${name}${value};
 "
 	    classrelation_ref 150019 // <aggregation>
+      end
+
+      classrelation 156931 // <dependency>
+	relation 156035 -_->
+	  a default
+	    cpp default "#include in source"
+	    classrelation_ref 156931 // <dependency>
+	  b parent class_ref 154371 // DebugAlgorithm
       end
     end
 
@@ -718,7 +811,35 @@ ${inlines}
 	
       end
 
-      operation 150147 "Get"
+      operation 157443 "ClearDestroy"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 157571 "Count"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
+      operation 150147 "GetIterator"
 	public explicit_return_type ""
 	nparams 0
 	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
@@ -746,12 +867,61 @@ ${inlines}
 	
       end
 
+      operation 157315 "Copy"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
+      end
+
       classrelation 149763 // <aggregation>
 	relation_ref 148995 // <aggregation>
       end
 
       classrelation 150019 // <aggregation>
 	relation_ref 149123 // <aggregation>
+      end
+    end
+
+    class 167683 "TwoDimensionsMatrixWithCache"
+      visibility package 
+      cpp_decl "${comment}${template}class ${name}${inherit} {
+${members}};
+${inlines}
+"
+      java_decl ""
+      php_decl ""
+      python_2_2 python_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      classrelation 157059 // <generalisation>
+	relation 156163 ---|>
+	  a public
+	    cpp default "${type}"
+	    classrelation_ref 157059 // <generalisation>
+	  b parent class_ref 128002 // Algorithm
+      end
+
+      operation 164483 "resolve"
+	public explicit_return_type ""
+	nparams 0
+	cpp_decl "    ${comment}${friend}${static}${inline}${virtual}${type} ${name}${(}${)}${const}${volatile}${throw}${abstract};
+"
+	cpp_def "${comment}${inline}${type} ${class}::${name}${(}${)}${const}${volatile}${throw}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+	
       end
     end
   end
