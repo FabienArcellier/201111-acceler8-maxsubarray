@@ -3,11 +3,11 @@
 #include <new>
 #include "problem_data.h"
 
-ProblemData::ProblemData (int width, int length)
+ProblemData::ProblemData (int width, int height)
 {
   this -> width = width;
-  this -> length = length;
-  this -> matrice = new short[width * length];
+  this -> height = height;
+  this -> matrice = new short[width * height];
   
   // 0 etant l'element neutre, il contient que des positifs et des negatifs
   this -> containOnlyPositiveNumbers = 1;
@@ -24,26 +24,9 @@ int ProblemData::GetWidth ()
   return this -> width;
 }
 
-int ProblemData::GetLength ()
+int ProblemData::GetHeight ()
 {
-  return this -> length;
-}
-
-/*!
- * \brief Permet d'enregistrer une valeur de type short dans la matrice
- * 
- * row et column doivent être defini à l'interieur de la matrice
- */
-void ProblemData::SetValue (int column, int row, short value)
-{
-  assert (column < this -> width);
-  assert (column >= 0);
-  assert (row < this -> length);
-  assert (row >= 0);
-  
-  (this -> matrice)[(this -> width * row) + column] = value;
-  this -> containOnlyPositiveNumbers = this -> containOnlyPositiveNumbers & (value >= 0);
-  this -> containOnlyNegativeNumbers = this -> containOnlyNegativeNumbers & (value <= 0);
+  return this -> height;
 }
 
 /*!
@@ -55,7 +38,7 @@ short ProblemData::GetValue (int column, int row)
 {
   assert (column < this -> width);
   assert (column >= 0);
-  assert (row < this -> length);
+  assert (row < this -> height);
   assert (row >= 0);
   
   return (this -> matrice)[(this -> width * row) + column];

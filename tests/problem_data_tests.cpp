@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include "test.h"
 #include "problem_data.h"

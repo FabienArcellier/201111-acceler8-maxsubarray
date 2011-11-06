@@ -50,7 +50,7 @@ void DebugAlgorithm::WriteMatrice (int x0, int y0, int x1, int y1)
   
   ofstream &output = *(this -> output);
   int matrice_width = problem_data -> GetWidth ();
-  int matrice_height = problem_data -> GetLength ();
+  int matrice_height = problem_data -> GetHeight ();
   
   for (int j = 0; j < matrice_height; j++)
   {

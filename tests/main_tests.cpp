@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 using namespace std;
+#include "coords_maximum_subarray.h"
 #include "debug.h"
 #include "test.h"
 #include "problem_data.h"
@@ -21,14 +22,9 @@ void DisplayMaxSubarrayTests ()
 {
   TEST_TITLE ("DisplayMaxSubarrayTests");
 
-  list<vector<int> > list;
-  vector<int> tab (4);
-  tab[0] = 4;
-  tab[1] = 5;
-  tab[2] = 6;
-  tab[3] = 7;
-  list.push_back (tab);
-  list.push_back (tab);
-  list.push_back (tab);
-  DisplayMaxSubarray (list);
+  CoordsMaximumSubarray coords;
+  coords.Add (4, 5, 6, 7);
+  coords.Add (4, 5, 6, 7);
+  coords.Add (4, 5, 6, 7);
+  DisplayMaxSubarray (coords);
 }

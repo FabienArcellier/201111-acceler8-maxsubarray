@@ -12,7 +12,7 @@ using namespace std;
 CacheProblemData::CacheProblemData(ProblemData &data)
 {
   
- int matrice_length = data.GetLength();
+  int matrice_length = data.GetHeight();
  int matrice_width = data.GetWidth();
  short * matrice = data.GetMatrice();
  this -> matrice = new int[(matrice_width+1) * matrice_length];

@@ -59,7 +59,7 @@ void InstanciateProblemDataFromFilenameTest ()
   data = InstanciateProblemDataFromFilename ("scenarios/scenario1/data");
   
   TEST (data -> GetWidth () == 5);
-  TEST (data -> GetLength () == 3);
+  TEST (data -> GetHeight () == 3);
   TEST (data -> GetValue (0, 0) == 0);
   TEST (data -> GetValue (1, 0) == 0);
   TEST (data -> GetValue (4, 2) == 15);
@@ -72,5 +72,5 @@ void InstanciateProblemDataFromFilenameScenario3Test ()
   data = InstanciateProblemDataFromFilename ("scenarios/scenario3/input.txt");
   
   TEST (data -> GetWidth () == 101);
-  TEST (data -> GetLength () == 100);
+  TEST (data -> GetHeight () == 100);
 }

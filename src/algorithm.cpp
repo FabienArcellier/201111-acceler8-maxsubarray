@@ -6,17 +6,31 @@
 #include <iostream>
 #include <vector>
 #include <list>
-
 #include "debug.h"
 
-
 using namespace std;
+
+#include "tbb/parallel_reduce.h"
+#include "tbb/blocked_range.h"
+
+using namespace tbb;
 
 #include "problem_data.h"
 #include "cache_problem_data.h"
 #include "coords_maximum_subarray.h"
+#include "apply_kadan2d.h"
 #include "algorithm.h"
 #include "debug_algorithm.h"
+
+algorithm::algorithm ()
+{
+  this -> coord_maximum_subarray = new CoordsMaximumSubarray ();
+}
+
+algorithm::~algorithm ()
+{
+  delete this -> coord_maximum_subarray;
+}
 
 /** \brief Selection de l'algorithme en fonction de la composition de la matrice - Peut etre amené à évoluer après benchmarck
   */
@@ -28,35 +42,35 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new AllNegativeMatrix;
   /** \todo Vérifier si la longueur/largeur commence à zéro ou à un
     */  
-  else if(data.GetWidth() == 1 || data.GetLength() == 1)
+  else if(data.GetWidth() == 1 || data.GetHeight() == 1)
     return new OneDimensionMatrix;
   else
   {
     return new TwoDimensionMatrix;
-    //return new TwoDimensionMatrixWithCache;
+//     return new TwoDimensionMatrixParallel;
+//     return new TwoDimensionMatrixWithCache;
   }
 }
 
-
 /** \brief Méthodes de la fonction algorithme pour accéder aux attributs privés (Set/Get/Display)
   */
-list<vector<int> > * algorithm::GetCoordMaximumSubArray()
+CoordsMaximumSubarray * algorithm::GetCoordsMaximumSubarray()
 {
-  return this->coord_maximum_subarray.Get ();
+  return this -> coord_maximum_subarray;
 }
 
 
-void algorithm::SetCoordMaximumSubArray(int x0, int y0, int x1, int y1)
+void algorithm::SetCoordsMaximumSubarray(int x0, int y0, int x1, int y1)
 {
-  this->coord_maximum_subarray.Add (x0, y0, x1, y1);
+  (this -> coord_maximum_subarray) -> Add (x0, y0, x1, y1);
 }
 
 /*!
  * \brief Vide la file qui contient les resultats pour en mettre des nouveaux
  */
-void algorithm::ClearCoordMaximumSubArray ()
+void algorithm::ClearCoordsMaximumSubarray ()
 {
-  this->coord_maximum_subarray.Clear ();
+  (this->coord_maximum_subarray) -> ClearDestroy ();
 }
 
 
@@ -70,14 +84,11 @@ void algorithm::SetWorkerThreads(short threads_quantity)
   this->WorkerThreads = threads_quantity;
 }
 
-
-
-
 /** \brief Algorithme de résolution dans le cas d'une matrice totalement positive
   */
 void AllPositiveMatrix::resolve(ProblemData &data)
 {
-  this->SetCoordMaximumSubArray(0,0,data.GetWidth()-1,data.GetLength()-1);
+  this->SetCoordsMaximumSubarray(0,0,data.GetWidth()-1,data.GetHeight()-1);
 }
 
 
@@ -86,26 +97,27 @@ void AllPositiveMatrix::resolve(ProblemData &data)
 void AllNegativeMatrix::resolve(ProblemData &data)
 {
   short* matrice = data.GetMatrice();
-  
+
   short max_value = matrice[0];
-  this -> SetCoordMaximumSubArray(0,0,0,0);
+  this -> SetCoordsMaximumSubarray(0,0,0,0);
   int max_coordinate[2] = {0,0};
+
   
-  
-  for(int i=1;i<data.GetWidth()*data.GetLength();i++){
+  for(int i=1;i<data.GetWidth()*data.GetHeight();i++){
     if(matrice[i] > max_value){
       max_value = matrice[i];
-      max_coordinate[0] = (int)(i%data.GetLength());
-      max_coordinate[1] = (int)(i/data.GetLength());
+      max_coordinate[0] = (int)(i%data.GetHeight());
+      max_coordinate[1] = (int)(i/data.GetHeight());
       
-      this -> ClearCoordMaximumSubArray();
-      this -> SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
+      this -> ClearCoordsMaximumSubarray();
+      this -> SetCoordsMaximumSubarray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
     }
     else if (matrice[i] == max_value)
     {
-      max_coordinate[0] = (int)(i%data.GetLength());
-      max_coordinate[1] = (int)(i/data.GetLength());
-      this -> SetCoordMaximumSubArray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
+      max_coordinate[0] = (int)(i%data.GetHeight());
+      max_coordinate[1] = (int)(i/data.GetHeight());
+      
+      this -> SetCoordsMaximumSubarray(max_coordinate[0],max_coordinate[1],max_coordinate[0],max_coordinate[1]);
     }
   }
 }
@@ -117,7 +129,7 @@ void OneDimensionMatrix::resolve(ProblemData &data)
 {
     /* maximum subarray a[k..l] of a[1..n] */
     short* matrice = data.GetMatrice();
-    int matrice_length = data.GetLength();
+    int matrice_length = data.GetHeight();
     int matrice_width = data.GetWidth();
     int s=1<<31, t = 0, j = 1;
     for (int i=0;i<matrice_length *matrice_width;i++)
@@ -125,19 +137,19 @@ void OneDimensionMatrix::resolve(ProblemData &data)
         t = t + matrice[i];
         if (t > s) 
         {
-          this -> ClearCoordMaximumSubArray();
+          this -> ClearCoordsMaximumSubarray();
           if(matrice_width== 1)
-            this->SetCoordMaximumSubArray(j,0,i,0);
+            this->SetCoordsMaximumSubarray(j,0,i,0);
           else
-             this->SetCoordMaximumSubArray(0,j,0,i);
+             this->SetCoordsMaximumSubarray(0,j,0,i);
           s = t;
         }
         else if( t==s)
         {
           if(matrice_width == 1)
-            this->SetCoordMaximumSubArray(j,0,i,0);
+            this->SetCoordsMaximumSubarray(j,0,i,0);
           else
-             this->SetCoordMaximumSubArray(0,j,0,i);
+             this->SetCoordsMaximumSubarray(0,j,0,i);
         }
         if (t < 0)
         {
@@ -159,11 +171,11 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
 //   string report_name ("resolve.log");
 //   DebugAlgorithm debug (report_name, data);
   short *matrice = data.GetMatrice ();
-  int matrice_length = data.GetLength();
+  int matrice_length = data.GetHeight();
   int matrice_width = data.GetWidth();
   
   int max_value = data.GetValue (0, 0);
-  this -> SetCoordMaximumSubArray (0, 0, 0, 0);
+  this -> SetCoordsMaximumSubarray (0, 0, 0, 0);
   
   // Parallelisable
   for(int borne_gauche_y = 0; borne_gauche_y < matrice_length; borne_gauche_y++) 
@@ -192,12 +204,71 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
         if (value > max_value)
         {
           max_value = value;
-          this -> ClearCoordMaximumSubArray ();
-          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+          this -> ClearCoordsMaximumSubarray ();
+          this -> SetCoordsMaximumSubarray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value == max_value)
         {
-          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+          this -> SetCoordsMaximumSubarray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+        }
+        else if (value < 0)
+        {
+          value = 0;
+          borne_gauche_x = borne_droite_x + 1;
+        }
+      }
+    }
+  }
+  
+//   DEBUG_IF (1, max_value);
+}
+
+void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
+{
+//   string report_name ("resolve.log");
+//   DebugAlgorithm debug (report_name, data);
+  int matrice_length = data.GetHeight();
+  int matrice_width = data.GetWidth();
+  
+  int max_value = data.GetValue (0, 0);
+  this -> SetCoordsMaximumSubarray (0, 0, 0, 0);
+  
+  
+  CacheProblemData matrice_cache(data);
+  // Parallelisable
+  for(int borne_gauche_y = 0; borne_gauche_y < matrice_length; borne_gauche_y++) 
+  {   
+    
+    // Parallelisable à condition de faire sauter le cache
+    for(int borne_droite_y = borne_gauche_y  ; borne_droite_y < matrice_length; borne_droite_y++) 
+    {
+      int borne_gauche_x = 0;
+      
+      // Non parallelisable (Dependante des calculs precedents)
+      for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
+      {
+        int value = 0;
+
+        for(int i = borne_gauche_y;i <= borne_droite_y; i++)
+        {
+          value += matrice_cache.GetValue(borne_gauche_x,borne_droite_x,0);
+        }
+//         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//         debug.WriteValue (value);
+//         debug.WriteMaxValue (max_value);
+//         debug.WriteEmptyLine ();
+//         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+//         debug.WriteEmptyLine ();
+        
+        if (value > max_value)
+        {
+          max_value = value;
+          this -> ClearCoordsMaximumSubarray ();
+          this -> SetCoordsMaximumSubarray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+        }
+        else if (value == max_value)
+        {
+          this -> SetCoordsMaximumSubarray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
         }
         else if (value < 0)
         {
@@ -213,67 +284,17 @@ void TwoDimensionMatrix::resolve(ProblemData &data)
   DEBUG_IF (1, max_value);
 }
 
-void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
+void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 {
-//   string report_name ("resolve.log");
-//   DebugAlgorithm debug (report_name, data);
-  short *matrice = data.GetMatrice ();
-  int matrice_length = data.GetLength();
   int matrice_width = data.GetWidth();
+  int Grain = (matrice_width / this -> WorkerThreads) + 1;
   
-  int max_value = data.GetValue (0, 0);
-  this -> SetCoordMaximumSubArray (0, 0, 0, 0);
+//   DEBUG_IF (1, matrice_width);
+  ApplyKadan2d kadan = ApplyKadan2d (&data);
   
+  parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
   
-  CacheProblemData matrice_cache(data);
-  // Parallelisable
-  for(int borne_gauche_y = 0; borne_gauche_y < matrice_length; borne_gauche_y++) 
-  {   
-    
-    // Parallelisable à condition de faire sauter le cache
-    for(int borne_droite_y = borne_gauche_y  ; borne_droite_y < matrice_length; borne_droite_y++) 
-    {
-      int value = 0;
-      int borne_gauche_x = 0;
-      
-      // Non parallelisable (Dependante des calculs precedents)
-      for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
-      {
-        int value = 0;
-
-        for(int i = borne_gauche_y;i <= borne_droite_y; i++)
-	{
-	  value += matrice_cache.GetValue(borne_gauche_x,borne_droite_x,0);
-	}
-//          debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-//          debug.WriteValue (value);
-//         debug.WriteMaxValue (max_value);
-//         debug.WriteEmptyLine ();
-//         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-//         debug.WriteEmptyLine ();
-        
-        if (value > max_value)
-        {
-          max_value = value;
-          this -> ClearCoordMaximumSubArray ();
-          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-        }
-        else if (value == max_value)
-        {
-          this -> SetCoordMaximumSubArray (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-        }
-        else if (value < 0)
-        {
-//           string text_reset_zero ("Reset value zero");
-//           debug.WriteString (text_reset_zero);
-          
-          value = 0;
-          borne_gauche_x = borne_droite_x + 1;
-        }
-      }
-    }
-  }
-  DEBUG_IF (1, max_value);
+  this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
 }
 
 

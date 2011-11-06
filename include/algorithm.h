@@ -1,23 +1,18 @@
 
-#include <vector>
-#include <list>
-
-
-using namespace std;
-
-
 class algorithm
 {
   public:
+    algorithm ();
+    ~algorithm ();
     virtual void resolve(ProblemData &data) = 0;
     void SetWorkerThreads(short threads_quantity);
     short GetWorkerThreads();
-    list< vector<int> > * GetCoordMaximumSubArray();
-    void SetCoordMaximumSubArray(int x0, int y0, int x1, int y1);
-    void ClearCoordMaximumSubArray ();
-  private:
+    CoordsMaximumSubarray * GetCoordsMaximumSubarray();
+    void SetCoordsMaximumSubarray(int x0, int y0, int x1, int y1);
+    void ClearCoordsMaximumSubarray ();
+  protected:
+    CoordsMaximumSubarray *coord_maximum_subarray;
     short WorkerThreads;
-    CoordsMaximumSubarray coord_maximum_subarray;
 };
 
 algorithm* SelectAlgorithm (ProblemData &data);
@@ -36,13 +31,11 @@ class AllNegativeMatrix : public algorithm
   
 };
 
-
 class OneDimensionMatrix : public algorithm
 {
   public:
     void resolve(ProblemData &data)  ;
 };
-
 
 class TwoDimensionMatrix : public algorithm
 {
@@ -51,6 +44,12 @@ class TwoDimensionMatrix : public algorithm
 };
 
 class TwoDimensionMatrixWithCache : public algorithm
+{
+  public:
+    void resolve(ProblemData &data);
+};
+
+class TwoDimensionMatrixParallel : public algorithm
 {
   public:
     void resolve(ProblemData &data);

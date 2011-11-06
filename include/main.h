@@ -12,4 +12,4 @@ void DisplayHelp ();
 /*!
  * \brief Display the coord of an array with 4 items
  */
-void DisplayMaxSubarray (list<vector<int> > & max_subarray_bornes);
+void DisplayMaxSubarray (CoordsMaximumSubarray &max_subarray_bornes);

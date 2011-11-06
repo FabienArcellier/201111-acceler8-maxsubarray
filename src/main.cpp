@@ -7,9 +7,14 @@
 #include <list>
 using namespace std;
 
+#include "tbb/task_scheduler_init.h"
+#include "tbb/blocked_range.h"
+using namespace tbb;
+
 #include "debug.h"
 #include "problem_data.h"
 #include "coords_maximum_subarray.h"
+#include "apply_kadan2d.h"
 #include "algorithm.h"
 #include "input_reader.h"
 #include "main.h"
@@ -27,6 +32,8 @@ int main (int argc, char *argv[])
   ApplicationSettings application_settings;
   application_settings.processor_number = atoi (argv[1]);
   
+  task_scheduler_init init_tbb (application_settings.processor_number);
+  
   vector<string> filenames;
   for (int i = 2; i < argc; i++)
   {    
@@ -39,22 +46,18 @@ int main (int argc, char *argv[])
   for (int i = 0; i < count_filename; i++)
   {
     ProblemData *data = NULL;
-    cout << "test" << endl;
     data = InstanciateProblemDataFromFilename (filenames[i]);
     algorithm * Algorithm = NULL;
     Algorithm = SelectAlgorithm (*data);
     Algorithm -> SetWorkerThreads ((short) (application_settings.processor_number));
     Algorithm -> resolve (*data);
-    cout << "test" << endl;
-    list<vector<int> > *tab = NULL;
-    tab = Algorithm -> GetCoordMaximumSubArray ();
+    
+    CoordsMaximumSubarray *tab = Algorithm -> GetCoordsMaximumSubarray ();
     DisplayMaxSubarray (*tab);
     
     delete Algorithm;
     delete data;
   }
-  
-  cout << "Fin du traitement" << endl;
 }
 
 #endif
@@ -74,24 +77,7 @@ void DisplayHelp ()
 /*!
  * \brief Display the coord of an array with 4 items
  */
-void DisplayMaxSubarray (list<vector<int> > & max_subarray_bornes)
+void DisplayMaxSubarray (CoordsMaximumSubarray &max_subarray_bornes)
 {
-  max_subarray_bornes.front ();
-  std::list<vector<int> >::iterator it = max_subarray_bornes.begin();
-  
-  for (; it != max_subarray_bornes.end(); it++)
-  {    
-    for (int j = 0; j < 4; j++)
-    {
-      cout << (*it)[j] << flush;
-      if (j < 3)
-      {
-        cout << " ";
-      }
-      else
-      {
-        cout << "\n";
-      }
-    }
-  }
+  max_subarray_bornes.Display ();
 }

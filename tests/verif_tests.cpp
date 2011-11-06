@@ -1,5 +1,5 @@
 using namespace std;
-
+#include <cassert>
 #include "test.h"
 #include "debug.h"
 #include <iostream>
