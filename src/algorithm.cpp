@@ -287,12 +287,12 @@ void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
 void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 {
   int matrice_width = data.GetWidth();
-  int Grain = (matrice_width / this -> WorkerThreads) + 1;
+  //int Grain = (matrice_width / this -> WorkerThreads) + 1;
   
 //   DEBUG_IF (1, matrice_width);
   ApplyKadan2d kadan = ApplyKadan2d (&data);
   
-  parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
+  parallel_reduce (blocked_range<int> (0, matrice_width, 1), kadan);
   
   this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
 }
