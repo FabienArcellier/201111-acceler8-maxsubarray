@@ -33,8 +33,8 @@ ifeq ($(TARGET),MTL)
     LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
   else
     CC=icc
-    CFLAG=-Werror-all -O2 -DNDEBUG=1 -ltbb -march=native ${INCLUDE_DIRS}
-    LDFLAG=-Werror-all -lstdc++ -ltbb -march=native ${INCLUDE_DIRS}
+    CFLAG=-Werror-all -O2 -DNDEBUG=1 -ltbb -m64 ${INCLUDE_DIRS}
+    LDFLAG=-Werror-all -lstdc++ -ltbb -m64 ${INCLUDE_DIRS}
   endif
 endif
 
@@ -43,6 +43,9 @@ ifeq ($(TARGET),STATION)
   CFLAG=-Wall -lm -O2 -ltbb -ftree-vectorizer-verbose=2 -march=native -DNDEBUG  ${INCLUDE_DIRS} ${G_PROF}
   LDFLAG=-Wall -lm -O2 -ltbb -lstdc++ -ftree-vectorizer-verbose=2 -march=native  ${INCLUDE_DIRS} ${G_PROF}
 endif
+
+
+
 
 #*********************************
 #
@@ -54,6 +57,7 @@ run: clean ${PATH_BIN}/run ${PATH_BIN}/verif copy_scenarios copy_benchmark
 
 tests: clean ${PATH_BIN}/coords_maximum_subarray_tests ${PATH_BIN}/problem_data_tests ${PATH_BIN}/cache_problem_data_tests ${PATH_BIN}/input_reader_tests ${PATH_BIN}/algorithm_tests ${PATH_BIN}/debug_algorithm_tests ${PATH_BIN}/verif_tests ${PATH_BIN}/main_tests copy_scenarios copy_tests_file
 
+livraison:  create_livraison
 
 #*********************************
 #
@@ -175,3 +179,16 @@ copy_scenarios:
 
 copy_benchmark:
 	cp tools/benchmark.sh ${PATH_BIN}/
+
+create_livraison:
+	-rm -R livraison
+	mkdir -p livraison
+	mkdir -p livraison/obj
+	-svn export --force src livraison/src
+	-svn export --force include livraison/include
+	cp -f tools/makefile livraison/
+	cd livraison
+#TODO
+#	cp -f documentation/readme.txt livraison/documentation/
+	#zip solution.zip livraison/src livraison/include livraison/makefile -P secret
+	zip solution.zip src include -r makefile -P secret
