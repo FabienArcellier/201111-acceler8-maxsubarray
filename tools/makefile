@@ -20,7 +20,7 @@ LDFLAG=-Werror-all -lstdc++ -ltbb -m64 ${INCLUDE_DIRS}
 #
 #*********************************
 
-all: source ${PATH_BIN}/run 
+all:  ${PATH_BIN}/run 
 
 #*********************************
 #
@@ -28,7 +28,7 @@ all: source ${PATH_BIN}/run
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj  ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 #*********************************
@@ -54,6 +54,9 @@ ${PATH_OBJ}/debug_algorithm.obj: ${PATH_SRC}/debug_algorithm.cpp ${PATH_INCLUDE}
 
 ${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
+	
+${PATH_OBJ}/apply_kadan2d.obj: ${PATH_SRC}/apply_kadan2d.cpp ${PATH_INCLUDE}/apply_kadan2d.h
+	$(CC) $(CFLAG) -o $@ -c $<
 
 ${PATH_OBJ}/coords_maximum_subarray.obj: ${PATH_SRC}/coords_maximum_subarray.cpp ${PATH_INCLUDE}/coords_maximum_subarray.h
 	$(CC) $(CFLAG) $(INCLUDE_DIRS) -o $@ -c $<
@@ -68,11 +71,9 @@ ${PATH_OBJ}/input_reader.obj:${PATH_SRC}/input_reader.cpp ${PATH_INCLUDE}/input_
 #
 #*********************************
 
-clean: clean_bin	
+clean: 	
 	-rm -R ${PATH_OBJ}/*
+	-rm -f run
 
 clean_bin:
 	-rm  -R ${PATH_BIN}/*
-
-source:
-	source /opt/intel/Compiler/latest/bin/iccvars.sh intel64

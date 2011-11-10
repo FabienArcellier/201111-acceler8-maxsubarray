@@ -46,8 +46,8 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new OneDimensionMatrix;
   else
   {
-    return new TwoDimensionMatrix;
-//     return new TwoDimensionMatrixParallel;
+    //return new TwoDimensionMatrix;
+     return new TwoDimensionMatrixParallel;
 //     return new TwoDimensionMatrixWithCache;
   }
 }
