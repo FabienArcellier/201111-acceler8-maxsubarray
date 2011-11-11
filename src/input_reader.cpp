@@ -57,43 +57,55 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
   char character = '\0';
   int separator = 0;
   int new_line = 0;
+  char line[500];
+  
   while (file_handle.eof () == 0)
   {
     // Invariant, there was a segmentation fault because of NULL value
     assert (column != NULL);
     assert (row != NULL);
-    file_handle.get (character);
+    file_handle.getline (line, 500);
+//     DEBUG_IF (1, line);
+    for (int i = 0; i < 500; i++)
+    {
+      character = line[i];
+      if (character == ' ' && separator == 0)
+      {
+        (*column)++;
+        separator = 1;
+      }
+      else if (character == '\0' && i != 499)
+      {
+        if (*column != 0)
+        {
+          (*row)++;
+        }
+        
+        if (separator == 1 && *column != 0)
+        {
+          (*column)--;
+        }
+        
+        if (column_reference == 0)
+        {
+          column_reference = *column;
+        }
+        
+        assert (*column == column_reference || *column == 0);
+        *column = 0;
+        new_line = 1;
+        break;
+      }
+      else
+      {
+        separator = 0;
+        new_line = 0;
+      }
+    }
     
-    if (character == ' ' && separator == 0)
+    if (file_handle.fail() == 1 && file_handle.eof () == 0)
     {
-      (*column)++;
-      separator = 1;
-    }
-    else if (character == '\n')
-    {
-      if (*column != 0)
-      {
-        (*row)++;
-      }
-      
-      if (separator == 1 && *column != 0)
-      {
-        (*column)--;
-      }
-      
-      if (column_reference == 0)
-      {
-        column_reference = *column;
-      }
-      
-      assert (*column == column_reference || *column == 0);
-      *column = 0;
-      new_line = 1;
-    }
-    else
-    {
-      separator = 0;
-      new_line = 0;
+      file_handle.clear();
     }
   }
   file_handle.clear ();

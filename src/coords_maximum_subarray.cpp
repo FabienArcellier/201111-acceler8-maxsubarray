@@ -13,6 +13,7 @@ CoordsMaximumSubarray::CoordsMaximumSubarray ()
 
 CoordsMaximumSubarray::~CoordsMaximumSubarray ()
 {
+  this -> ClearDestroy ();
   delete this -> coords;
 }
 
