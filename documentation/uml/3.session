@@ -1,20 +1,19 @@
-window_sizes 1366 716 320 960 580 62
+window_sizes 1366 716 320 960 478 164
 diagrams
   classdiagram_ref 128003 // MDD
-    1040 560 100 4 288 0
+    1040 478 100 4 48 0
   activitydiagram_ref 134659 // DFD
     828 448 100 3 36 0
   active  classdiagram_ref 141187 // Structure
-    1040 580 100 4 72 0
-  componentdiagram_ref 147715 // Planning
-    1040 580 100 0 0 265
+    1040 478 100 0 216 442
   activitydiagram_ref 134531 // DFD Creer Matrice depuis Fichier
-    828 448 100 3 540 0
+    1040 478 100 3 936 0
 end
 show_stereotypes
-selected class_ref 128514 // TwoDimensionsMatrix
+selected operation_ref 164483 // resolve
 open
+  class_ref 128003 // ProblemData
   class_ref 128002 // Algorithm
-  class_ref 154371 // DebugAlgorithm
+  class_ref 167683 // TwoDimensionsMatrixWithCache
 end
 end
