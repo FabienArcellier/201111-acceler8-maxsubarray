@@ -10,9 +10,7 @@ public:
   {
     int* matrice = this->matrice;
     int l_width = this->width;
-    int result = matrice [col + (row + 1) * l_width];
-    result -= matrice [col + (row_ref) * l_width];
-    return result;
+    return matrice [col + (row + 1) * l_width] - matrice [col + (row_ref) * l_width];
   };
   
   int GetWidth()

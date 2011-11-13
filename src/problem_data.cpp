@@ -7,7 +7,7 @@ ProblemData::ProblemData (int width, int height)
 {
   this -> width = width;
   this -> height = height;
-  this -> matrice = new short[width * height];
+  this -> matrice = (short *) malloc (width * height * sizeof (short));
   
   // 0 etant l'element neutre, il contient que des positifs et des negatifs
   this -> containOnlyPositiveNumbers = 1;
@@ -16,7 +16,7 @@ ProblemData::ProblemData (int width, int height)
 
 ProblemData::~ProblemData ()
 {
-  delete [] this -> matrice;
+  free(this -> matrice);
 }
 
 int ProblemData::GetWidth ()

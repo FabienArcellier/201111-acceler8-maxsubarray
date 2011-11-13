@@ -9,6 +9,7 @@ using namespace std;
 
 #include "tbb/task_scheduler_init.h"
 #include "tbb/blocked_range.h"
+#include "tbb/cache_aligned_allocator.h"
 using namespace tbb;
 
 #include "debug.h"

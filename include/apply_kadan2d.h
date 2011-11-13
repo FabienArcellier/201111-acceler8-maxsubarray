@@ -14,7 +14,7 @@ public:
   
   bool is_divisible() const 
   {
-    return this -> upper > this -> lower + 1 && this -> current_work > this -> work_by_thread;
+    return this -> upper > this -> lower + 1 && this -> current_work > (this -> work_by_thread * 2);
   };
   
   BlockKadan2d (int lower, int upper, int count_thread) : 
@@ -32,22 +32,33 @@ public:
     this -> current_work = local_total_work;
   };
   
-  BlockKadan2d (BlockKadan2d &r, split)
+  BlockKadan2d (BlockKadan2d &r, split) :
+    work_by_thread (r.work_by_thread)
   {
     int local_upper = r.upper;
     int local_lower = r.lower;
     int work = 0;
     do
     {
-      work = local_upper - local_lower;
+      work += local_upper - local_lower;
       local_lower++;
-    } while (work < this -> work_by_thread); 
+    } while (work < this -> work_by_thread && local_lower < local_upper); 
     
-    this -> lower = r.lower;
-    this -> upper = local_lower;
-    this -> current_work = work;
-    r.lower = local_lower;
-    r.current_work -= work;
+    this -> lower = local_lower;
+    this -> upper = r.upper;
+    this -> current_work = r.current_work - work;
+    
+    r.upper = local_lower;
+    r.current_work = work;
+    
+    /*DEBUG_IF (1, "New Thread");
+    DEBUG_IF (1, this -> work_by_thread);
+    DEBUG_IF (1, this -> lower);
+    DEBUG_IF (1, this -> upper);
+    DEBUG_IF (1, this -> current_work);
+    DEBUG_IF (1, r.lower);
+    DEBUG_IF (1, r.upper);
+    DEBUG_IF (1, r.current_work);*/
   };
 };
 
@@ -68,7 +79,7 @@ public:
     ApplyKadan2d (ApplyKadan2d& x, split) : 
     problem_data (x.GetProblemData()),
     maxValue (x.GetMaxValue()) {
-//       cout << "ApplyKadan2d : Constructeur by copy invoked" << endl;
+       cout << "ApplyKadan2d : Constructeur by copy invoked" << endl;
       this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
     };
     

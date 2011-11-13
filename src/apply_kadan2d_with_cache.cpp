@@ -23,7 +23,7 @@ void ApplyKadan2dWithCache::operator () ( const blocked_range<int> &r)
   CacheProblemData * matrice_cache = this -> cache_problem_data;
   int max_value = this -> maxValue;
   int matrice_length = matrice_cache -> GetLength();
-  int Grain = 100;
+  int Grain = 1000;
   
   for(int borne_gauche_y = r.begin(); borne_gauche_y < r.end(); borne_gauche_y++) 
   {  

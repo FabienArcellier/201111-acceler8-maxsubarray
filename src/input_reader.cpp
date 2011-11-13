@@ -51,7 +51,7 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
   //assert (file_handle != NULL);
   assert (*row == 0);
   assert (*column == 0);
-  assert (file_handle.tellg () == 0);
+  //assert (file_handle.tellg () == 0);
   
   int column_reference = 0;
   char character = '\0';
@@ -118,5 +118,5 @@ void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
     (*row)++; 
   }
   
-  assert (file_handle.tellg () == 0);
+  //assert (file_handle.tellg () == 0);
 }

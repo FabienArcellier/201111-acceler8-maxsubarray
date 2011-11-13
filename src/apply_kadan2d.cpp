@@ -8,6 +8,7 @@ using namespace std;
 #include "coords_maximum_subarray.h"
 #include "problem_data.h"
 #include "tbb/blocked_range.h"
+#include "tbb/cache_aligned_allocator.h"
 using namespace tbb;
 
 #include "debug_algorithm.h"
@@ -30,7 +31,7 @@ void ApplyKadan2d::operator () ( const BlockKadan2d &r)
   
   for(int borne_gauche_y = r.lower; borne_gauche_y < r.upper; borne_gauche_y++) 
   {  
-    vector<int> tableau_colonne (matrice_width, 0);
+    vector<int, cache_aligned_allocator<int> > tableau_colonne (matrice_width, 0);
     // Parallelisable à condition de faire sauter le cache
     for(int borne_droite_y = borne_gauche_y; borne_droite_y < matrice_length; borne_droite_y++) 
     {
@@ -40,8 +41,7 @@ void ApplyKadan2d::operator () ( const BlockKadan2d &r)
       // Non parallelisable (Dependante des calculs precedents)
       for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
       {
-        tableau_colonne[borne_droite_x] += matrice [borne_droite_x + borne_droite_y * matrice_width];
-        value += tableau_colonne[borne_droite_x];
+        value += (tableau_colonne[borne_droite_x] += matrice [borne_droite_x + borne_droite_y * matrice_width]);
         
 //         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
 //         debug.WriteValue (value);
@@ -77,8 +77,8 @@ void ApplyKadan2d::operator () ( const BlockKadan2d &r)
 
 void ApplyKadan2d::join ( ApplyKadan2d &copy)
 {
-  DEBUG_IF (1, copy.GetMaxValue ());
-  DEBUG_IF (1, this -> maxValue);
+  DEBUG_IF (1, "join");
+  //DEBUG_IF (1, this -> maxValue);
   
   if (this -> maxValue < copy.GetMaxValue ())
   {
