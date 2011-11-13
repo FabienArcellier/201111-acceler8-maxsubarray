@@ -46,9 +46,9 @@ algorithm* SelectAlgorithm (ProblemData& data)
     return new OneDimensionMatrix;
   else
   {
-    //return new TwoDimensionMatrix;
-     return new TwoDimensionMatrixParallel;
-//     return new TwoDimensionMatrixWithCache;
+//     return new TwoDimensionMatrix;
+//     return new TwoDimensionMatrixParallel;
+    return new TwoDimensionMatrixWithCache;
   }
 }
 
@@ -242,17 +242,13 @@ void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
     // Parallelisable à condition de faire sauter le cache
     for(int borne_droite_y = borne_gauche_y  ; borne_droite_y < matrice_length; borne_droite_y++) 
     {
+      int value = 0;
       int borne_gauche_x = 0;
       
       // Non parallelisable (Dependante des calculs precedents)
       for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
       {
-        int value = 0;
-
-        for(int i = borne_gauche_y;i <= borne_droite_y; i++)
-        {
-          value += matrice_cache.GetValue(borne_gauche_x,borne_droite_x,0);
-        }
+        value += matrice_cache.GetValue(borne_droite_x, borne_droite_y, borne_gauche_y);
 //         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
 //         debug.WriteValue (value);
 //         debug.WriteMaxValue (max_value);
@@ -287,12 +283,12 @@ void TwoDimensionMatrixWithCache::resolve(ProblemData &data)
 void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 {
   int matrice_width = data.GetWidth();
-  //int Grain = (matrice_width / this -> WorkerThreads) + 1;
+  int Grain = (matrice_width / this -> WorkerThreads) + 1;
   
 //   DEBUG_IF (1, matrice_width);
   ApplyKadan2d kadan = ApplyKadan2d (&data);
   
-  parallel_reduce (blocked_range<int> (0, matrice_width, 1), kadan);
+  parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
   
   this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
 }
