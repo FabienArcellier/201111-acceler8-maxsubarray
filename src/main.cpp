@@ -13,8 +13,10 @@ using namespace tbb;
 
 #include "debug.h"
 #include "problem_data.h"
+#include "cache_problem_data.h"
 #include "coords_maximum_subarray.h"
 #include "apply_kadan2d.h"
+#include "apply_kadan2d_with_cache.h"
 #include "algorithm.h"
 #include "input_reader.h"
 #include "main.h"

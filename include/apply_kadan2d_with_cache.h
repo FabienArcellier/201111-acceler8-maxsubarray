@@ -1,26 +1,26 @@
-class ApplyKadan2d
+class ApplyKadan2dWithCache
 {
 public:
-  ApplyKadan2d (ProblemData *data) : 
-    problem_data (data),
-    maxValue (1 << 31) {
-//       cout << "ApplyKadan2d : Constructeur invoked" << endl;
-      this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
-    };
+  ApplyKadan2dWithCache (CacheProblemData *data) : 
+    cache_problem_data (data),
+    maxValue (1 << 31) 
+  {
+    this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
+  };
     
     /*!
      * \brief Constructor by copy to instanciate the parallele_reduce
      */
-    ApplyKadan2d (ApplyKadan2d& x, split) : 
-    problem_data (x.GetProblemData()),
+    ApplyKadan2dWithCache (ApplyKadan2dWithCache& x, split) : 
+    cache_problem_data (x.GetCacheProblemData()),
     maxValue (x.GetMaxValue()) {
-//       cout << "ApplyKadan2d : Constructeur by copy invoked" << endl;
+      //       cout << "ApplyKadan2dWithCache : Constructeur by copy invoked" << endl;
       this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
     };
     
-  ~ApplyKadan2d ()
+    ~ApplyKadan2dWithCache ()
   {
-//     cout << "ApplyKadan2d : Destructor invoked" << endl;
+    //     cout << "ApplyKadan2dWithCache : Destructor invoked" << endl;
     delete this -> coords_maximum_subarray;
   }
 
@@ -42,15 +42,15 @@ public:
     return this -> coords_maximum_subarray;
   }
   
-  ProblemData * GetProblemData ()
+  CacheProblemData * GetCacheProblemData ()
   {
-    return this -> problem_data;
+    return this -> cache_problem_data;
   }
   
-  void join (ApplyKadan2d&);
+  void join (ApplyKadan2dWithCache&);
   
 private:
-  ProblemData *problem_data;
+  CacheProblemData *cache_problem_data;
   CoordsMaximumSubarray *coords_maximum_subarray;
   int maxValue;
 };

@@ -54,3 +54,9 @@ class TwoDimensionMatrixParallel : public algorithm
   public:
     void resolve(ProblemData &data);
 };
+
+class TwoDimensionMatrixParallelWithCache : public algorithm
+{
+public:
+  void resolve(ProblemData &data);
+};

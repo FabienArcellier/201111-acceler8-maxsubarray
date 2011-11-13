@@ -12,7 +12,9 @@ using namespace tbb;
 
 #include "coords_maximum_subarray.h"
 #include "problem_data.h"
+#include "cache_problem_data.h"
 #include "apply_kadan2d.h"
+#include "apply_kadan2d_with_cache.h"
 #include "algorithm.h"
 
 /* Tests declaration */

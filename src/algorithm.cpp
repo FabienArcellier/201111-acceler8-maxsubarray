@@ -19,6 +19,7 @@ using namespace tbb;
 #include "cache_problem_data.h"
 #include "coords_maximum_subarray.h"
 #include "apply_kadan2d.h"
+#include "apply_kadan2d_with_cache.h"
 #include "algorithm.h"
 #include "debug_algorithm.h"
 
@@ -48,7 +49,8 @@ algorithm* SelectAlgorithm (ProblemData& data)
   {
 //     return new TwoDimensionMatrix;
 //     return new TwoDimensionMatrixParallel;
-    return new TwoDimensionMatrixWithCache;
+//     return new TwoDimensionMatrixWithCache;
+    return new TwoDimensionMatrixParallelWithCache;
   }
 }
 
@@ -288,6 +290,19 @@ void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 //   DEBUG_IF (1, matrice_width);
   ApplyKadan2d kadan = ApplyKadan2d (&data);
   
+  parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
+  
+  this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
+}
+
+void TwoDimensionMatrixParallelWithCache::resolve(ProblemData &data)
+{
+  int matrice_width = data.GetWidth();
+  int Grain = (matrice_width / this -> WorkerThreads) + 1;
+  CacheProblemData matrice_cache(data);
+  
+  //   DEBUG_IF (1, matrice_width);
+  ApplyKadan2dWithCache kadan = ApplyKadan2dWithCache (&matrice_cache);
   parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
   
   this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));

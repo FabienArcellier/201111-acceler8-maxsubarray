@@ -51,12 +51,3 @@ int CacheProblemData::GetValue(int col, int row)
   return (this -> matrice)[this -> width * (row + 1) + col]; 
 }
 
-int CacheProblemData::GetValue(int col, int row, int row_ref)
-{
-  int* matrice = this->matrice;
-  int l_width = this->width;
-  int result = matrice [col + (row + 1) * l_width];
-  result -= matrice [col + (row_ref) * l_width];
-  return result;
-} 
-

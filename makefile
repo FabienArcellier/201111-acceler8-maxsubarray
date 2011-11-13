@@ -44,9 +44,6 @@ ifeq ($(TARGET),STATION)
   LDFLAG=-Wall -lm -O2 -ltbb -lstdc++ -ftree-vectorizer-verbose=2 -march=native  ${INCLUDE_DIRS} ${G_PROF}
 endif
 
-
-
-
 #*********************************
 #
 #	Target
@@ -65,7 +62,7 @@ livraison:  create_livraison
 #
 #*********************************
 
-${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj  ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
+${PATH_BIN}/run : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj  ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/apply_kadan2d_with_cache.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/main.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/verif : ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj
@@ -77,10 +74,10 @@ ${PATH_BIN}/main_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/coords_maximum_
 ${PATH_BIN}/verif_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/verif.obj ${PATH_OBJ}/verif_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
+${PATH_BIN}/debug_algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/apply_kadan2d_with_cache.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/debug_algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
-${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
+${PATH_BIN}/algorithm_tests: ${PATH_OBJ}/coords_maximum_subarray.obj ${PATH_OBJ}/apply_kadan2d.obj ${PATH_OBJ}/apply_kadan2d_with_cache.obj ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/cache_problem_data.obj ${PATH_OBJ}/debug_algorithm.obj ${PATH_OBJ}/algorithm.obj ${PATH_OBJ}/algorithm_tests.obj
 	$(CC) $(LDFLAG) -o $@ $^
 
 ${PATH_BIN}/input_reader_tests: ${PATH_OBJ}/problem_data.obj ${PATH_OBJ}/input_reader.obj ${PATH_OBJ}/input_reader_tests.obj
@@ -111,6 +108,9 @@ ${PATH_OBJ}/debug_algorithm.obj: ${PATH_SRC}/debug_algorithm.cpp ${PATH_INCLUDE}
 	$(CC) $(CFLAG) -o $@ -c $<
 
 ${PATH_OBJ}/algorithm.obj: ${PATH_SRC}/algorithm.cpp ${PATH_INCLUDE}/algorithm.h
+	$(CC) $(CFLAG) -o $@ -c $<
+
+${PATH_OBJ}/apply_kadan2d_with_cache.obj: ${PATH_SRC}/apply_kadan2d_with_cache.cpp ${PATH_INCLUDE}/apply_kadan2d_with_cache.h
 	$(CC) $(CFLAG) -o $@ -c $<
 
 ${PATH_OBJ}/apply_kadan2d.obj: ${PATH_SRC}/apply_kadan2d.cpp ${PATH_INCLUDE}/apply_kadan2d.h
@@ -179,6 +179,7 @@ copy_scenarios:
 
 copy_benchmark:
 	cp tools/benchmark.sh ${PATH_BIN}/
+	cp build/benchmark1 ${PATH_BIN}/
 
 create_livraison:
 	-rm -R livraison
