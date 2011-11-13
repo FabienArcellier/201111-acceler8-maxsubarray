@@ -298,7 +298,7 @@ void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 void TwoDimensionMatrixParallelWithCache::resolve(ProblemData &data)
 {
   int matrice_width = data.GetWidth();
-  int Grain = (matrice_width / this -> WorkerThreads) + 1;
+  int Grain = 100;
   CacheProblemData matrice_cache(data);
   
   //   DEBUG_IF (1, matrice_width);

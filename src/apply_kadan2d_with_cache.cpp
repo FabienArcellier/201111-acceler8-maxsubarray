@@ -19,6 +19,36 @@ using namespace tbb;
 */
 void ApplyKadan2dWithCache::operator () ( const blocked_range<int> &r)
 {
+  CacheProblemData * matrice_cache = this -> cache_problem_data;
+  int max_value = this -> maxValue;
+  int matrice_length = matrice_cache -> GetLength();
+  int Grain = 100;
+  
+  for(int borne_gauche_y = r.begin(); borne_gauche_y < r.end(); borne_gauche_y++) 
+  {  
+    ApplyKadan2dWithCacheInternalLoop kadan = ApplyKadan2dWithCacheInternalLoop (&matrice_cache);
+    parallel_reduce (blocked_range<int> (r.begin(), matrice_length, Grain), kadan);
+  }
+  
+  this -> maxValue = max_value;
+  this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
+}
+
+void ApplyKadan2dWithCache::join ( ApplyKadan2dWithCache &copy)
+{  
+  if (this -> maxValue < copy.GetMaxValue ())
+  {
+    this -> coords_maximum_subarray -> Copy (*(copy.GetCoordsMaximumSubarray()));
+    this -> maxValue = copy.GetMaxValue ();
+  }
+  else if (this -> maxValue == copy.GetMaxValue ())
+  {
+    this -> coords_maximum_subarray -> Concat (*(copy.GetCoordsMaximumSubarray()));
+  }
+}
+
+void ApplyKadan2dWithCacheInternalLoop::operator () ( const blocked_range<int> &r)
+{
 //   cout << "ApplyKadan2dWithCache" << endl;
 //   DEBUG_IF(1, r.begin());
 //   DEBUG_IF(1, r.end());
@@ -27,44 +57,40 @@ void ApplyKadan2dWithCache::operator () ( const blocked_range<int> &r)
   CacheProblemData * matrice_cache = this -> cache_problem_data;
   int max_value = this -> maxValue;
   int matrice_width = matrice_cache -> GetWidth();
-  int matrice_length = matrice_cache -> GetLength();  
   
-  for(int borne_gauche_y = r.begin(); borne_gauche_y < r.end(); borne_gauche_y++) 
-  {  
-    for(int borne_droite_y = borne_gauche_y; borne_droite_y < matrice_length; borne_droite_y++) 
+  for(int borne_droite_y = r.begin(); borne_droite_y < r.end(); borne_droite_y++) 
+  {
+    int value = 0;
+    int borne_gauche_x = 0;
+    
+    for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
     {
-      int value = 0;
-      int borne_gauche_x = 0;
+      value += matrice_cache -> GetValue(borne_droite_x, borne_droite_y, borne_gauche_y);
       
-      for(int borne_droite_x = 0; borne_droite_x < matrice_width; borne_droite_x++) 
-      {
-        value += matrice_cache -> GetValue(borne_droite_x, borne_droite_y, borne_gauche_y);
-        
-//         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-//         debug.WriteValue (value);
-//         debug.WriteMaxValue (max_value);
-//         debug.WriteEmptyLine ();
-//         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-//         debug.WriteEmptyLine ();
-                
-        if (value > max_value)
-        {
-          max_value = value;
-          this ->  coords_maximum_subarray -> Clear ();
-          this ->  coords_maximum_subarray -> Add (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-        }
-        else if (value == max_value)
-        {
-          this ->  coords_maximum_subarray -> Add (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
-        }
-        else if (value < 0)
-        {
-//           string text_reset_zero ("Reset value zero");
-//           debug.WriteString (text_reset_zero);
+    //         debug.WriteCoord (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+    //         debug.WriteValue (value);
+    //         debug.WriteMaxValue (max_value);
+    //         debug.WriteEmptyLine ();
+    //         debug.WriteMatrice (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+    //         debug.WriteEmptyLine ();
           
-          value = 0;
-          borne_gauche_x = borne_droite_x + 1;
-        }
+      if (value > max_value)
+      {
+        max_value = value;
+        this ->  coords_maximum_subarray -> Clear ();
+        this ->  coords_maximum_subarray -> Add (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+      }
+      else if (value == max_value)
+      {
+        this ->  coords_maximum_subarray -> Add (borne_gauche_x, borne_gauche_y, borne_droite_x, borne_droite_y);
+      }
+      else if (value < 0)
+      {
+    //           string text_reset_zero ("Reset value zero");
+    //           debug.WriteString (text_reset_zero);
+        
+        value = 0;
+        borne_gauche_x = borne_droite_x + 1;
       }
     }
   }
@@ -72,11 +98,8 @@ void ApplyKadan2dWithCache::operator () ( const blocked_range<int> &r)
   this -> maxValue = max_value;
 }
 
-void ApplyKadan2dWithCache::join ( ApplyKadan2dWithCache &copy)
-{
-  DEBUG_IF (1, copy.GetMaxValue ());
-  DEBUG_IF (1, this -> maxValue);
-  
+void ApplyKadan2dWithCacheInternalLoop::join ( ApplyKadan2dWithCache &copy)
+{  
   if (this -> maxValue < copy.GetMaxValue ())
   {
     this -> coords_maximum_subarray -> Copy (*(copy.GetCoordsMaximumSubarray()));
