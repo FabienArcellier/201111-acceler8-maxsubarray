@@ -48,9 +48,9 @@ algorithm* SelectAlgorithm (ProblemData& data)
   else
   {
 //     return new TwoDimensionMatrix;
-//     return new TwoDimensionMatrixParallel;
+    return new TwoDimensionMatrixParallel;
 //     return new TwoDimensionMatrixWithCache;
-    return new TwoDimensionMatrixParallelWithCache;
+//     return new TwoDimensionMatrixParallelWithCache;
   }
 }
 
@@ -290,7 +290,7 @@ void TwoDimensionMatrixParallel::resolve(ProblemData &data)
 //   DEBUG_IF (1, matrice_width);
   ApplyKadan2d kadan = ApplyKadan2d (&data);
   
-  parallel_reduce (blocked_range<int> (0, matrice_width, Grain), kadan);
+  parallel_reduce (BlockKadan2d (0, matrice_width, this -> WorkerThreads), kadan);
   
   this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
 }

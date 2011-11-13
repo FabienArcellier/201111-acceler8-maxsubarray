@@ -1,3 +1,57 @@
+class BlockKadan2d
+{
+public:
+  int lower;
+  int upper;
+  int total_work;
+  int work_by_thread;
+  int current_work;
+  
+  bool empty() const 
+  {
+    return this -> lower == this -> upper;
+  };
+  
+  bool is_divisible() const 
+  {
+    return this -> upper > this -> lower + 1 && this -> current_work > this -> work_by_thread;
+  };
+  
+  BlockKadan2d (int lower, int upper, int count_thread) : 
+  lower (lower),
+  upper (upper)
+  {
+    int local_total_work = 0;
+    for (int i = lower; i < upper; i++)
+    {
+      local_total_work += i;
+    }
+    
+    this -> total_work = local_total_work;
+    this -> work_by_thread = local_total_work / count_thread;
+    this -> current_work = local_total_work;
+  };
+  
+  BlockKadan2d (BlockKadan2d &r, split)
+  {
+    int local_upper = r.upper;
+    int local_lower = r.lower;
+    int work = 0;
+    do
+    {
+      work = local_upper - local_lower;
+      local_lower++;
+    } while (work < this -> work_by_thread); 
+    
+    this -> lower = r.lower;
+    this -> upper = local_lower;
+    this -> current_work = work;
+    r.lower = local_lower;
+    r.current_work -= work;
+  };
+};
+
+
 class ApplyKadan2d
 {
 public:
@@ -27,7 +81,7 @@ public:
   /*!
    * \brief Task to perform as Parallel treatment
    */
-  void operator () ( const blocked_range<int> &r);
+  void operator () ( const BlockKadan2d &r);
   
   /*!
    * \brief Read only accessor for the attribute maxValue

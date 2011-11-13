@@ -16,7 +16,7 @@ using namespace tbb;
 /*!
  * \brief Task to perform as Parallel treatment
  */
-void ApplyKadan2d::operator () ( const blocked_range<int> &r)
+void ApplyKadan2d::operator () ( const BlockKadan2d &r)
 {
 //   cout << "ApplyKadan2d" << endl;
 //   DEBUG_IF(1, r.begin());
@@ -28,7 +28,7 @@ void ApplyKadan2d::operator () ( const blocked_range<int> &r)
   int matrice_width = this -> problem_data -> GetWidth();
   int matrice_length = this -> problem_data -> GetHeight();  
   
-  for(int borne_gauche_y = r.begin(); borne_gauche_y < r.end(); borne_gauche_y++) 
+  for(int borne_gauche_y = r.lower; borne_gauche_y < r.upper; borne_gauche_y++) 
   {  
     vector<int> tableau_colonne (matrice_width, 0);
     // Parallelisable à condition de faire sauter le cache
