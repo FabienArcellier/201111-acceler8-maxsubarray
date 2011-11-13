@@ -57,22 +57,27 @@ private:
 
 class ApplyKadan2dWithCacheInternalLoop
 {
-  ApplyKadan2dWithCacheInternalLoop (CacheProblemData *data) : 
+  
+public:
+  ApplyKadan2dWithCacheInternalLoop (CacheProblemData *data, int arg_borne_gauche_y) : 
+    borne_gauche_y (arg_borne_gauche_y),
     cache_problem_data (data),
-    maxValue (1 << 31) 
+    maxValue (1 << 31)
   {
     this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
   };
     
-    /*!
-     * \brief Constructor by copy to instanciate the parallele_reduce
-     */
-    ApplyKadan2dWithCacheInternalLoop (ApplyKadan2dWithCache& x, split) : 
+  /*!
+    * \brief Constructor by copy to instanciate the parallele_reduce
+    */
+  ApplyKadan2dWithCacheInternalLoop (ApplyKadan2dWithCacheInternalLoop& x, split) : 
+    borne_gauche_y (x.borne_gauche_y),
     cache_problem_data (x.GetCacheProblemData()),
-    maxValue (x.GetMaxValue()) {
-      //       cout << "ApplyKadan2dWithCacheInternalLoop : Constructeur by copy invoked" << endl;
-      this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
-    };
+    maxValue (x.GetMaxValue())
+  {
+    //       cout << "ApplyKadan2dWithCacheInternalLoop : Constructeur by copy invoked" << endl;
+    this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
+  };
     
     ~ApplyKadan2dWithCacheInternalLoop ()
   {
@@ -104,9 +109,10 @@ class ApplyKadan2dWithCacheInternalLoop
   }
   
   void join (ApplyKadan2dWithCacheInternalLoop&);
+  int borne_gauche_y;
   
 private:
   CacheProblemData *cache_problem_data;
   CoordsMaximumSubarray *coords_maximum_subarray;
   int maxValue;
-}
+};

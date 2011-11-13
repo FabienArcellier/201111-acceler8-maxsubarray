@@ -9,6 +9,7 @@ using namespace std;
 #include "problem_data.h"
 #include "cache_problem_data.h"
 #include "tbb/blocked_range.h"
+#include "tbb/parallel_reduce.h"
 using namespace tbb;
 
 #include "debug_algorithm.h"
@@ -26,12 +27,21 @@ void ApplyKadan2dWithCache::operator () ( const blocked_range<int> &r)
   
   for(int borne_gauche_y = r.begin(); borne_gauche_y < r.end(); borne_gauche_y++) 
   {  
-    ApplyKadan2dWithCacheInternalLoop kadan = ApplyKadan2dWithCacheInternalLoop (&matrice_cache);
-    parallel_reduce (blocked_range<int> (r.begin(), matrice_length, Grain), kadan);
+    ApplyKadan2dWithCacheInternalLoop kadan = ApplyKadan2dWithCacheInternalLoop (matrice_cache, borne_gauche_y);
+    parallel_reduce (blocked_range<int> (borne_gauche_y, matrice_length, Grain), kadan);
+    
+    if (max_value < kadan.GetMaxValue ())
+    {
+      max_value = kadan.GetMaxValue ();
+      this -> coords_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
+    }
+    else if (max_value == kadan.GetMaxValue ())
+    {
+      this -> coords_maximum_subarray -> Concat (*(kadan.GetCoordsMaximumSubarray()));
+    }
   }
   
   this -> maxValue = max_value;
-  this -> coord_maximum_subarray -> Copy (*(kadan.GetCoordsMaximumSubarray()));
 }
 
 void ApplyKadan2dWithCache::join ( ApplyKadan2dWithCache &copy)
@@ -55,6 +65,7 @@ void ApplyKadan2dWithCacheInternalLoop::operator () ( const blocked_range<int> &
 //   string report_name ("resolve.log");
 //   DebugAlgorithm debug (report_name, *(this -> problem_data));
   CacheProblemData * matrice_cache = this -> cache_problem_data;
+  int borne_gauche_y = this -> borne_gauche_y;
   int max_value = this -> maxValue;
   int matrice_width = matrice_cache -> GetWidth();
   
@@ -98,7 +109,7 @@ void ApplyKadan2dWithCacheInternalLoop::operator () ( const blocked_range<int> &
   this -> maxValue = max_value;
 }
 
-void ApplyKadan2dWithCacheInternalLoop::join ( ApplyKadan2dWithCache &copy)
+void ApplyKadan2dWithCacheInternalLoop::join ( ApplyKadan2dWithCacheInternalLoop &copy)
 {  
   if (this -> maxValue < copy.GetMaxValue ())
   {
