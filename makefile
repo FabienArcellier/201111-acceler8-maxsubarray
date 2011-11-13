@@ -33,8 +33,8 @@ ifeq ($(TARGET),MTL)
     LDFLAG=-Wall -lm -O2 -lstdc++ -ftree-vectorizer-verbose=2 -march=native -funroll-loops ${INCLUDE_DIRS} ${G_PROF}
   else
     CC=icc
-    CFLAG=-Werror-all -O2 -DNDEBUG=1 -ltbb -m64 ${INCLUDE_DIRS}
-    LDFLAG=-Werror-all -lstdc++ -ltbb -m64 ${INCLUDE_DIRS}
+    CFLAG=-Werror-all -O2 -DNDEBUG=1 -ltbb -m64 ${INCLUDE_DIRS} ${G_PROF}
+    LDFLAG=-Werror-all -lstdc++ -ltbb -m64 ${INCLUDE_DIRS} ${G_PROF}
   endif
 endif
 

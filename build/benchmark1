@@ -1,0 +1,7 @@
+#!/bin/sh
+#PBS -j oe
+source /opt/intel/Compiler/11.1/072/bin/iccvars.sh intel64
+source /opt/intel/Compiler/11.1/072/tbb/bin/tbbvars.sh intel64
+
+cd /home/rimaxime/Acceler8_MSP/trunk/bin/
+sh ./benchmark.sh 40 ./scenarios/scenario5/input.txt
