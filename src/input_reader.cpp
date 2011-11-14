@@ -1,10 +1,10 @@
-using namespace std;
-
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <cstdlib>
 #include <assert.h>
 #include <string>
+using namespace std;
 #include "debug.h"
 #include "problem_data.h"
 #include "input_reader.h"
@@ -21,32 +21,42 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
     //exit (1);
   }
   
+  file_handle.seekg (0, ios::end);
+  int file_length = (int) (file_handle.tellg()) + 1;
+  file_handle.seekg (0, ios::beg);
+  char* string_buffer = (char *) malloc(file_length * sizeof (char));
+  file_handle.read (string_buffer, file_length);
+
+  
+  file_handle.close ();
+  
+  istringstream *string_stream = new istringstream (string_buffer,istringstream::in);
+  
   int row = 0, column = 0;
   short buffer = 0;
   
-  CountRowColumnFromFilehandle (file_handle, &row, &column);
+  CountRowColumnFromFilehandle (*string_stream, &row, &column);
   
   ProblemData *data = NULL;
   data = new ProblemData (column, row);
-  
-//   DEBUG_IF (1, column);
-//   DEBUG_IF (1, row);
   
   for (int i = 0; i < row; i++)
   {
     for (int j = 0; j < column; j++)
     {
-      file_handle >> buffer;
+      *string_stream >> buffer;
       data -> SetValue(j, i, buffer);
     }
   }
   
-  file_handle.close ();
+  string_stream -> str("");
+  delete string_stream;
+  free(string_buffer);
   
   return data;
 }
 
-void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column)
+void CountRowColumnFromFilehandle (istringstream &file_handle, int *row, int *column)
 {
   //assert (file_handle != NULL);
   assert (*row == 0);

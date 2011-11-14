@@ -3,4 +3,4 @@
  */
 ProblemData * InstanciateProblemDataFromFilename (string filename);
 
-void CountRowColumnFromFilehandle (ifstream &file_handle, int *row, int *column);
+void CountRowColumnFromFilehandle (istringstream &file_handle, int *row, int *column);

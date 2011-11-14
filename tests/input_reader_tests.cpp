@@ -1,6 +1,8 @@
 #include <assert.h>
 #include <fstream>
 #include <iostream>
+#include <sstream>
+#include <string>
 using namespace std;
 #include "debug.h"
 #include "test.h"
@@ -24,32 +26,33 @@ int main (void)
 void CountRowColumnFromFilehandleTest ()
 {
   TEST_TITLE ("CountRowColumnFromFilehandleTest");
-  ifstream file_handle ("scenarios/scenario1/data");
-  assert (file_handle);
+  string data = "0 0 12 0 14\n12 5 22 21 15\n12 5 22 21 15";
+  istringstream iss (data,istringstream::in);
+  
+  //assert (iss);
   int row = 0, column = 0;
   
-  CountRowColumnFromFilehandle (file_handle, &row, &column);
+  CountRowColumnFromFilehandle (iss, &row, &column);
   DEBUG_IF (row != 3, row);
   TEST (row == 3);
   TEST (column == 5);
-  
-  file_handle.close();
 }
 
 void CountRowColumnFromFilehandleScenario3Test ()
 {
   TEST_TITLE ("CountRowColumnFromFilehandleScenario3Test");
-  ifstream file_handle ("scenarios/scenario3/input.txt");
-  assert (file_handle);
+  string data = "0 0 12 0 14\n12 5 22 21 15\n12 5 22 21 15\n12 5 22 21 15\n";
+  istringstream iss (data,istringstream::in);
+  
+  //assert (iss);
   int row = 0, column = 0;
   
-  CountRowColumnFromFilehandle (file_handle, &row, &column);
-  DEBUG_IF (row != 100, row);
-  TEST (row == 100);
-  DEBUG_IF (column != 101, column);
-  TEST (column == 101);
+  CountRowColumnFromFilehandle (iss, &row, &column);
   
-  file_handle.close();
+  DEBUG_IF (row != 4, row);
+  TEST (row == 4);
+  DEBUG_IF (column != 5, column);
+  TEST (column == 5);
 }
 
 void InstanciateProblemDataFromFilenameTest ()

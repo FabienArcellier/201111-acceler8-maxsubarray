@@ -10,7 +10,7 @@
 #define DEBUG_IF(EXPRESSION, VARIABLE) \
 if (EXPRESSION)\
 {\
-  cout << __FILE__ << " - " << __LINE__ << " D:" << #VARIABLE << " : " << VARIABLE << endl << flush;\
+  cerr << __FILE__ << " - " << __LINE__ << " D:" << #VARIABLE << " : " << VARIABLE << endl << flush;\
 }
 
 #endif
