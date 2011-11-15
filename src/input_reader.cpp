@@ -48,7 +48,7 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   DEBUG_IF(1, i_count_row_column.seconds());
   
   InputReaderParseData input_parse_data(string_buffer);
-  parallel_reduce (blocked_range<int> (0, file_length, 10000), input_parse_data);
+  parallel_reduce (blocked_range<int> (0, file_length, 1000), input_parse_data);
   list <short> *buffer_input = input_parse_data.data;
   
 //   istringstream *string_stream = new istringstream (string_buffer,istringstream::in);
@@ -153,17 +153,17 @@ void CountRowColumnFromFilehandle (const char *buffer, int *row, int *column, in
 void InputReaderParseData::operator () ( const blocked_range<int> &r)
 {
   istringstream string_stream (this -> buffer,istringstream::in);
-  string_stream.seekg (r.begin(), ios::beg);
   char character = '\0';
   if (r.begin() != 0)
   {
+    string_stream.seekg (r.begin(), ios::beg);
     do
     {
       character = string_stream.get();
     } while (character != '\n' && character != ' ');
   }
   
-  for (; string_stream.tellg() <= r.end() && string_stream.eof() == 0;)
+  for (; string_stream.tellg() < r.end() && string_stream.eof() == 0;)
   {
     short buffer;
     string_stream >> buffer;
@@ -175,6 +175,9 @@ void InputReaderParseData::operator () ( const blocked_range<int> &r)
 
 void InputReaderParseData::join (InputReaderParseData &r)
 {
+  //DEBUG_IF(1, "join");
+  //DEBUG_IF(1, this -> data -> size());
   list<short>::iterator it = this -> data -> end();
   this -> data -> splice (it, *(r.data));
+  //DEBUG_IF(1, this -> data -> size());
 }

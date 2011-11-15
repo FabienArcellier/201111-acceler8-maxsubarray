@@ -79,7 +79,7 @@ public:
     ApplyKadan2d (ApplyKadan2d& x, split) : 
     problem_data (x.GetProblemData()),
     maxValue (x.GetMaxValue()) {
-       cout << "ApplyKadan2d : Constructeur by copy invoked" << endl;
+    //cout << "ApplyKadan2d : Constructeur by copy invoked" << endl;
       this -> coords_maximum_subarray = new CoordsMaximumSubarray ();
     };
     

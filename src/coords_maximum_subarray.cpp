@@ -79,7 +79,7 @@ void CoordsMaximumSubarray::Copy (CoordsMaximumSubarray &coords)
 {
   this -> ClearDestroy ();
   
-  list<vector<int> *>::iterator it = this -> coords -> begin();
+  list<vector<int> *>::iterator it = this -> coords -> end();
   this -> coords -> splice (it, *(coords.coords));
 }
 
