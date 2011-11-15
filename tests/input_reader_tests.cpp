@@ -1,9 +1,12 @@
 #include <assert.h>
 #include <fstream>
+#include <list>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "tbb/blocked_range.h"
 using namespace std;
+using namespace tbb;
 #include "debug.h"
 #include "test.h"
 #include "problem_data.h"
@@ -32,8 +35,8 @@ void CountRowColumnFromFilehandleTest ()
   int row = 0, column = 0;
   
   CountRowColumnFromFilehandle (data.c_str(), &row, &column, data.length());
-  DEBUG_IF (row != 3, row);
-  TEST (row == 3);
+  DEBUG_IF (row != 1, row);
+  TEST (row == 1);
   TEST (column == 5);
 }
 
@@ -47,8 +50,8 @@ void CountRowColumnFromFilehandleScenario3Test ()
   
   CountRowColumnFromFilehandle (data.c_str(), &row, &column, data.length());
   
-  DEBUG_IF (row != 4, row);
-  TEST (row == 4);
+  DEBUG_IF (row != 1, row);
+  TEST (row == 1);
   DEBUG_IF (column != 5, column);
   TEST (column == 5);
 }

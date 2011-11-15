@@ -3,8 +3,12 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <list>
 #include <assert.h>
 #include <string>
+#include "tbb/blocked_range.h"
+using namespace std;
+using namespace tbb;
 
 #include "problem_data.h"
 #include "input_reader.h"
