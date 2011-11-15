@@ -40,7 +40,7 @@ endif
 
 ifeq ($(TARGET),STATION)
   CC=g++
-  CFLAG=-Wall -lm -O2 -ltbb -ftree-vectorizer-verbose=2 -march=native ${INCLUDE_DIRS} ${G_PROF}
+  CFLAG=-Wall -lm -O2 -ltbb -ftree-vectorizer-verbose=2 -DNDEBUG=1 -march=native ${INCLUDE_DIRS} ${G_PROF}
   LDFLAG=-Wall -lm -O2 -ltbb -lstdc++ -ftree-vectorizer-verbose=2 -march=native  ${INCLUDE_DIRS} ${G_PROF}
 endif
 
