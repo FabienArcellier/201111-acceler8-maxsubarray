@@ -35,7 +35,7 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   int row = 0, column = 0;
   short buffer = 0;
   
-  CountRowColumnFromFilehandle (*string_stream, &row, &column);
+  CountRowColumnFromFilehandle (string_buffer, &row, &column, file_length);
   
   ProblemData *data = NULL;
   data = new ProblemData (column, row);
@@ -56,77 +56,58 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   return data;
 }
 
-void CountRowColumnFromFilehandle (istringstream &file_handle, int *row, int *column)
+void CountRowColumnFromFilehandle (const char *buffer, int *row, int *column, int size)
 {
   //assert (file_handle != NULL);
   assert (*row == 0);
   assert (*column == 0);
-  //assert (file_handle.tellg () == 0);
   
   int column_reference = 0;
-  char character = '\0';
   int separator = 0;
   int new_line = 0;
-  char line[500];
-  
-  while (file_handle.eof () == 0)
-  {
+
     // Invariant, there was a segmentation fault because of NULL value
+  for (int i = 0; i < size - 1; i++)
+  {
     assert (column != NULL);
     assert (row != NULL);
-    file_handle.getline (line, 500);
-//     DEBUG_IF (1, line);
-    for (int i = 0; i < 500; i++)
+    char character = buffer[i];
+    if (character == ' ' && separator == 0)
     {
-      character = line[i];
-      if (character == ' ' && separator == 0)
-      {
-        (*column)++;
-        separator = 1;
-      }
-      else if (character == '\0' && i != 499)
-      {
-        if (*column != 0)
-        {
-          (*row)++;
-        }
-        
-        if (separator == 1 && *column != 0)
-        {
-          (*column)--;
-        }
-        
-        if (column_reference == 0)
-        {
-          column_reference = *column;
-        }
-        
-        assert (*column == column_reference || *column == 0);
-        *column = 0;
-        new_line = 1;
-        break;
-      }
-      else
-      {
-        separator = 0;
-        new_line = 0;
-      }
+      (*column)++;
+      separator = 1;
     }
-    
-    if (file_handle.fail() == 1 && file_handle.eof () == 0)
+    else if (character == '\n')
     {
-      file_handle.clear();
+      if (*column != 0)
+      {
+        (*row)++;
+      }
+      
+      if (separator == 1 && *column != 0)
+      {
+        (*column)--;
+      }
+      
+      if (column_reference == 0)
+      {
+        column_reference = *column;
+      }
+      
+      assert (*column == column_reference || *column == 0);
+      *column = 0;
+      new_line = 1;
+    }
+    else
+    {
+      separator = 0;
+      new_line = 0;
     }
   }
-  file_handle.clear ();
-  file_handle.seekg (0, ios::beg);
   
-  // Pour the space after the last element is missing
   *column = column_reference + 1;
   if (new_line == 0)
   {
-    (*row)++; 
+    (*row)++;
   }
-  
-  //assert (file_handle.tellg () == 0);
 }

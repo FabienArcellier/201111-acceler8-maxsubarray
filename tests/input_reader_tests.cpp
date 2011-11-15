@@ -27,12 +27,11 @@ void CountRowColumnFromFilehandleTest ()
 {
   TEST_TITLE ("CountRowColumnFromFilehandleTest");
   string data = "0 0 12 0 14\n12 5 22 21 15\n12 5 22 21 15";
-  istringstream iss (data,istringstream::in);
   
   //assert (iss);
   int row = 0, column = 0;
   
-  CountRowColumnFromFilehandle (iss, &row, &column);
+  CountRowColumnFromFilehandle (data.c_str(), &row, &column, data.length());
   DEBUG_IF (row != 3, row);
   TEST (row == 3);
   TEST (column == 5);
@@ -42,12 +41,11 @@ void CountRowColumnFromFilehandleScenario3Test ()
 {
   TEST_TITLE ("CountRowColumnFromFilehandleScenario3Test");
   string data = "0 0 12 0 14\n12 5 22 21 15\n12 5 22 21 15\n12 5 22 21 15\n";
-  istringstream iss (data,istringstream::in);
   
   //assert (iss);
   int row = 0, column = 0;
   
-  CountRowColumnFromFilehandle (iss, &row, &column);
+  CountRowColumnFromFilehandle (data.c_str(), &row, &column, data.length());
   
   DEBUG_IF (row != 4, row);
   TEST (row == 4);
@@ -75,5 +73,6 @@ void InstanciateProblemDataFromFilenameScenario3Test ()
   data = InstanciateProblemDataFromFilename ("scenarios/scenario3/input.txt");
   
   TEST (data -> GetWidth () == 101);
+  DEBUG_IF (data -> GetHeight () != 100, data -> GetHeight ());
   TEST (data -> GetHeight () == 100);
 }
