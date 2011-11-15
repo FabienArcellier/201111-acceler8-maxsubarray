@@ -1,15 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <list>
 #include <cstdlib>
 #include <assert.h>
 #include <string>
-#include "tbb/tick_count.h"
-#include "tbb/blocked_range.h"
-#include "tbb/parallel_reduce.h"
 using namespace std;
-using namespace tbb;
 #include "debug.h"
 #include "problem_data.h"
 #include "input_reader.h"
@@ -26,48 +21,21 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
     //exit (1);
   }
   
-  tick_count t0 = tick_count::now();
-  
   file_handle.seekg (0, ios::end);
   int file_length = (int) (file_handle.tellg()) + 1;
   file_handle.seekg (0, ios::beg);
   char* string_buffer = (char *) malloc(file_length * sizeof (char));
-  file_handle.read (string_buffer, file_length);  
+  file_handle.read (string_buffer, file_length);
+
+  
   file_handle.close ();
   
-  tick_count t1 = tick_count::now();
-  tick_count::interval_t i_read_file = t1 - t0;
-  DEBUG_IF(1, i_read_file.seconds());
+  istringstream *string_stream = new istringstream (string_buffer,istringstream::in);
   
   int row = 0, column = 0;
-  
+  short buffer = 0;
   
   CountRowColumnFromFilehandle (string_buffer, &row, &column, file_length);
-  tick_count t2 = tick_count::now();
-  tick_count::interval_t i_count_row_column = t2 - t1;
-  DEBUG_IF(1, i_count_row_column.seconds());
-  
-  InputReaderParseData input_parse_data(string_buffer);
-  parallel_reduce (blocked_range<int> (0, file_length, 1000), input_parse_data);
-  list <short> *buffer_input = input_parse_data.data;
-  
-//   istringstream *string_stream = new istringstream (string_buffer,istringstream::in);
-//   list<short> buffer_input;
-//   for (string_stream -> seekg(0, ios::beg); string_stream -> tellg() < file_length && string_stream -> eof() == 0;)
-//   {
-//     short buffer;
-//     *string_stream >> buffer;
-//     buffer_input.push_back (buffer);
-//   }
-  
-  row = buffer_input -> size() / column;
-  DEBUG_IF(1, row);
-  DEBUG_IF(1, column);
-  DEBUG_IF(1, buffer_input -> size());
-  
-  tick_count t3 = tick_count::now();
-  tick_count::interval_t i_load_data = t3 - t2;
-  DEBUG_IF(1, i_load_data.seconds());
   
   ProblemData *data = NULL;
   data = new ProblemData (column, row);
@@ -76,15 +44,13 @@ ProblemData * InstanciateProblemDataFromFilename (string filename)
   {
     for (int j = 0; j < column; j++)
     {
-      data -> SetValue(j, i, buffer_input -> front());
-      buffer_input -> pop_front();
+      *string_stream >> buffer;
+      data -> SetValue(j, i, buffer);
     }
   }
   
-  tick_count t4 = tick_count::now();
-  tick_count::interval_t i_get_data = t4 - t3;
-  DEBUG_IF(1, i_get_data.seconds());
-  
+  string_stream -> str("");
+  delete string_stream;
   free(string_buffer);
   
   return data;
@@ -131,7 +97,6 @@ void CountRowColumnFromFilehandle (const char *buffer, int *row, int *column, in
       assert (*column == column_reference || *column == 0);
       *column = 0;
       new_line = 1;
-      break;
     }
     else
     {
@@ -145,39 +110,4 @@ void CountRowColumnFromFilehandle (const char *buffer, int *row, int *column, in
   {
     (*row)++;
   }
-}
-
-/*!
- * \brief Task to perform as Parallel treatment
- */
-void InputReaderParseData::operator () ( const blocked_range<int> &r)
-{
-  istringstream string_stream (this -> buffer,istringstream::in);
-  char character = '\0';
-  if (r.begin() != 0)
-  {
-    string_stream.seekg (r.begin(), ios::beg);
-    do
-    {
-      character = string_stream.get();
-    } while (character != '\n' && character != ' ');
-  }
-  
-  for (; string_stream.tellg() < r.end() && string_stream.eof() == 0;)
-  {
-    short buffer;
-    string_stream >> buffer;
-    this -> data  -> push_back (buffer);
-  }
-  
-  string_stream.str("");
-}
-
-void InputReaderParseData::join (InputReaderParseData &r)
-{
-  //DEBUG_IF(1, "join");
-  //DEBUG_IF(1, this -> data -> size());
-  list<short>::iterator it = this -> data -> end();
-  this -> data -> splice (it, *(r.data));
-  //DEBUG_IF(1, this -> data -> size());
 }

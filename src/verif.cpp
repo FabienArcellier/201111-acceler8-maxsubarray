@@ -3,13 +3,8 @@ using namespace std;
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <list>
 #include <assert.h>
 #include <string>
-#include "tbb/task_scheduler_init.h"
-#include "tbb/blocked_range.h"
-using namespace std;
-using namespace tbb;
 
 #include "problem_data.h"
 #include "input_reader.h"
@@ -19,7 +14,6 @@ using namespace tbb;
 
 int main (int argc, char *argv[])
 {
-  task_scheduler_init init_tbb;
   assert (argc == 6);
   string filename (argv[1]);
   ProblemData * data = InstanciateProblemDataFromFilename (filename);

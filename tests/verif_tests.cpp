@@ -3,9 +3,6 @@ using namespace std;
 #include "test.h"
 #include "debug.h"
 #include <iostream>
-#include "tbb/blocked_range.h"
-using namespace std;
-using namespace tbb;
 #include "problem_data.h"
 #include "verif.h"
 

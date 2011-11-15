@@ -77,7 +77,8 @@ void ApplyKadan2d::operator () ( const BlockKadan2d &r)
 
 void ApplyKadan2d::join ( ApplyKadan2d &copy)
 {
-  //DEBUG_IF (1, "join");
+  DEBUG_IF (1, "join");
+  //DEBUG_IF (1, this -> maxValue);
   
   if (this -> maxValue < copy.GetMaxValue ())
   {

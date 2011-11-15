@@ -78,9 +78,15 @@ void CoordsMaximumSubarray::ClearDestroy ()
 void CoordsMaximumSubarray::Copy (CoordsMaximumSubarray &coords)
 {
   this -> ClearDestroy ();
+  list <vector<int> *>::iterator it = coords.GetIterator ();
+  int size = coords.Count ();
+  for (int i = 0; i < size; i++)
+  {
+    this -> coords -> push_back (*it);
+    it++;
+  }
   
-  list<vector<int> *>::iterator it = this -> coords -> end();
-  this -> coords -> splice (it, *(coords.coords));
+  coords.Clear ();
 }
 
 /*!
@@ -88,6 +94,13 @@ void CoordsMaximumSubarray::Copy (CoordsMaximumSubarray &coords)
 */
 void CoordsMaximumSubarray::Concat (CoordsMaximumSubarray &coords)
 {
-  list<vector<int> *>::iterator it = this -> coords -> end();
-  this -> coords -> splice (it, *(coords.coords));
+  list <vector<int> *>::iterator it = coords.GetIterator ();
+  int size = coords.Count ();
+  for (int i = 0; i < size; i++)
+  {
+    this -> coords -> push_back (*it);
+    it++;
+  }
+  
+  coords.Clear ();
 }
