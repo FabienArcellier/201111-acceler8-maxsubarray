@@ -20,7 +20,7 @@ LDFLAG=-Werror-all -lstdc++ -ltbb -m64 ${INCLUDE_DIRS}
 #
 #*********************************
 
-all:  ${PATH_BIN}/run 
+all:  prepare_mtl ${PATH_BIN}/run 
 
 #*********************************
 #
@@ -77,3 +77,7 @@ clean:
 
 clean_bin:
 	-rm  -R ${PATH_BIN}/*
+
+prepare_mtl:
+	-source /opt/intel/Compiler/11.1/072/bin/iccvars.sh intel64
+	-source /opt/intel/Compiler/11.1/072/tbb/bin/tbbvars.sh intel64
