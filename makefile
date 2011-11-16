@@ -192,6 +192,6 @@ create_livraison:
 #TODO
 	-cp -f documentation/readme_acceler8.pdf livraison/readme.pdf
 	#zip solution.zip livraison/src livraison/include livraison/makefile -P secret
-	zip solution.zip livraison/src livraison/include -r livraison/makefile livraison/readme.pdf -P secret
+	zip solution.zip -b livraison src include -r makefile readme.pdf -P secret
   
   
