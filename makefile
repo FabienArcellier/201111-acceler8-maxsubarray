@@ -191,7 +191,7 @@ create_livraison:
 	cd livraison
 #TODO
 	-mkdir livraison/documentation
-	-cp -f documentation/readme_acceler8.pdf livraison/documentation/
+	-cp -f documentation/readme_acceler8.pdf livraison/documentation.pdf
 	#zip solution.zip livraison/src livraison/include livraison/makefile -P secret
 	zip solution.zip src include -r makefile -P secret
   
